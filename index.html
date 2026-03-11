@@ -56,12 +56,11 @@
         
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(5,5,5,0.5); }
-        ::-webkit-scrollbar-thumb {
-            background: #1a1a1a; 
-            border-radius: 4px;
-            border: 1px solid #00E639;
-        }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 4px; border: 1px solid #00E639; }
         ::-webkit-scrollbar-thumb:hover { background: #00E639; }
+        
+        .mobile-nav-scroll::-webkit-scrollbar { display: none; }
+        .mobile-nav-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
         .panel {
             background-color: rgba(17, 17, 17, 0.85);
@@ -77,59 +76,35 @@
             box-shadow: 0 0 15px rgba(0, 230, 57, 0.15);
         }
 
-        .tab-btn {
-            color: #6b7280; 
-            transition: all 0.3s ease;
-        }
+        .tab-btn { color: #6b7280; transition: all 0.3s ease; }
         
         @media (min-width: 768px) {
-            .tab-btn:hover {
-                color: #00E639;
-                border-color: #00E639;
-            }
+            .tab-btn:hover { color: #00E639; border-color: #00E639; }
             .tab-btn.active {
-                background-color: #00E639;
-                color: #050505;
-                font-weight: 700;
-                box-shadow: 0 0 15px rgba(0, 230, 57, 0.4);
-                border-color: #00E639;
+                background-color: #00E639; color: #050505; font-weight: 700;
+                box-shadow: 0 0 15px rgba(0, 230, 57, 0.4); border-color: #00E639;
             }
         }
         
         @media (max-width: 767px) {
-            .tab-btn.active {
-                color: #00E639;
-            }
-            .tab-btn.active i {
-                filter: drop-shadow(0 0 5px rgba(0, 230, 57, 0.8));
-            }
+            .tab-btn.active { color: #00E639; }
+            .tab-btn.active i { filter: drop-shadow(0 0 5px rgba(0, 230, 57, 0.8)); }
         }
         
-        .scenario-btn.active {
-            background-color: #00E639;
-            color: #050505;
-            font-weight: bold;
-        }
+        .scenario-btn.active { background-color: #00E639; color: #050505; font-weight: bold; }
 
         .reveal {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
+            opacity: 0; transform: translateY(30px) scale(0.98);
             transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
             will-change: opacity, transform;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
-        @media (pointer: fine) {
-            * { cursor: none !important; }
-        }
+        @media (pointer: fine) { * { cursor: none !important; } }
         .cursor-dot {
             width: 8px; height: 8px; background-color: #00E639; border-radius: 50%;
             position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10001;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px #00E639, 0 0 20px #00E639;
+            transform: translate(-50%, -50%); box-shadow: 0 0 10px #00E639, 0 0 20px #00E639;
             transition: transform 0.15s ease-out, background-color 0.15s, box-shadow 0.15s;
         }
         .cursor-tail {
@@ -137,17 +112,13 @@
             position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
             transform: translate(-50%, -50%); box-shadow: 0 0 8px rgba(0, 230, 57, 0.3);
         }
-        @media (pointer: coarse) {
-            .cursor-dot, .cursor-tail { display: none !important; }
-        }
+        @media (pointer: coarse) { .cursor-dot, .cursor-tail { display: none !important; } }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
 
-    <!-- WELCOME SCREEN (СТАРТОВАЯ ЗАСТАВКА) -->
+    <!-- WELCOME SCREEN -->
     <div id="welcome-screen" class="fixed inset-0 z-[200] bg-darkbg flex flex-col items-center justify-center transition-opacity duration-700">
-        
-        <!-- КИБЕР-ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ТОЛЬКО ДЛЯ ЗАСТАВКИ -->
         <div class="absolute top-6 right-6 md:top-10 md:right-10 z-[201] flex gap-3 md:gap-4 bg-darkbg/80 backdrop-blur-md px-4 py-2 border border-cyberdark rounded-full shadow-[0_0_15px_rgba(0,230,57,0.1)] cursor-pointer pointer-events-auto">
             <button onclick="setWelcomeLang('en', event)" id="w-lang-en" class="w-lang-btn text-cybergreen drop-shadow-[0_0_5px_rgba(0,230,57,0.8)] font-cyber text-xs sm:text-sm tracking-widest transition-all">EN</button>
             <div class="w-px h-4 bg-gray-800 self-center"></div>
@@ -175,7 +146,6 @@
     <aside class="w-full md:w-64 bg-panelbg/90 backdrop-blur-md border-b md:border-b-0 md:border-r border-cyberdark flex flex-col p-4 md:p-6 sticky top-0 md:h-screen z-50 shrink-0">
         <div class="mb-2 md:mb-6 min-w-0 flex items-center justify-between md:block">
             <div>
-                <!-- ЛОГОТИП (Теперь кликабельный для вызова заставки) -->
                 <a href="#" id="logo-btn" class="flex items-center gap-3 md:gap-4 group mb-2 md:mb-4 w-fit" title="Samui Cyber Arena">
                     <div class="relative flex items-center justify-center px-3 py-2 md:px-4 md:py-2.5 bg-cybergreen text-darkbg font-cyber font-black text-xl md:text-2xl shadow-[0_0_15px_rgba(0,230,57,0.4)] group-hover:shadow-[0_0_25px_rgba(0,230,57,0.7)] group-hover:bg-white transition-all duration-300" style="clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);">
                         <span class="tracking-widest relative z-10">SCA</span>
@@ -187,10 +157,9 @@
                         <span class="font-text font-bold text-cybergreen/90 text-[10px] md:text-xs tracking-[0.25em] uppercase mt-1.5">Cyber Arena</span>
                     </div>
                 </a>
-                <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest break-words hidden md:block" data-i18n="ver_text">Инвест-Дэшборд v4.8</p>
+                <p class="text-xs text-gray-500 mt-2 uppercase tracking-widest break-words hidden md:block" data-i18n="ver_text">Инвест-Дэшборд v5.1</p>
             </div>
             
-            <!-- Переключатели валюты и языка -->
             <div class="flex flex-col gap-2 w-32 md:w-full md:mt-6">
                 <!-- Валюта -->
                 <div class="w-full bg-cyberdark p-1 rounded-full border border-gray-800 flex items-center">
@@ -206,19 +175,19 @@
             </div>
         </div>
 
-        <!-- APP-LIKE НАВИГАЦИЯ: Снизу на мобилках, слева на десктопе -->
+        <!-- APP-LIKE НАВИГАЦИЯ -->
         <nav class="fixed bottom-0 left-0 w-full z-[100] bg-panelbg/95 backdrop-blur-md border-t border-cyberdark flex justify-between px-2 pt-2 pb-4 md:relative md:border-t-0 md:bg-transparent md:flex-col md:p-0 md:justify-start md:mt-4 md:gap-3">
             <button onclick="switchTab('audience')" id="tab-audience" class="tab-btn active flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
                 <i class="ph ph-users text-2xl md:text-xl shrink-0"></i> 
                 <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_aud">Аудитория</span>
             </button>
+            <button onclick="switchTab('traffic')" id="tab-traffic" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
+                <i class="ph ph-chart-polar text-2xl md:text-xl shrink-0"></i> 
+                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_traf">Трафик</span>
+            </button>
             <button onclick="switchTab('esports')" id="tab-esports" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
                 <i class="ph ph-strategy text-2xl md:text-xl shrink-0"></i> 
                 <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_strat">Стратегия</span>
-            </button>
-            <button onclick="switchTab('tournaments')" id="tab-tournaments" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-calendar-check text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_tour">Турниры</span>
             </button>
             <button onclick="switchTab('finance')" id="tab-finance" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
                 <i class="ph ph-coins text-2xl md:text-xl shrink-0"></i> 
@@ -238,7 +207,7 @@
         </div>
     </aside>
 
-    <!-- Main Content (ДОБАВЛЕН PB-36 ДЛЯ ФИКСА НАХЛЕСТА БАРА НА МОБИЛКАХ) -->
+    <!-- Main Content -->
     <main class="flex-1 p-4 pb-36 md:pb-8 md:p-8 lg:p-10 w-full overflow-x-hidden min-w-0 relative">
         
         <!-- СТРАНИЦА 1: ДЕМОГРАФИЯ И АУДИТОРИЯ -->
@@ -324,6 +293,62 @@
             </div>
         </div>
 
+        <!-- СТРАНИЦА 1.5: ТРАФИК И ДАННЫЕ -->
+        <div id="page-traffic" class="page-section hidden animate-fade-in">
+            <header class="mb-8 border-b border-cyberdark pb-4 break-words reveal">
+                <h2 class="text-2xl sm:text-3xl font-cyber text-white uppercase leading-tight" data-i18n="pt_h2"><span class="text-cybergreen">Трафик</span> и Загрузка</h2>
+                <p class="text-sm sm:text-lg text-gray-400 mt-2" data-i18n="pt_sub">Аналитика целевой аудитории, конверсий и паттернов посещаемости на Самуи.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
+                <div class="panel col-span-1 lg:col-span-2 min-w-0 reveal">
+                    <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_funnel">Воронка аудитории (Самуи)</h3>
+                    <div class="relative h-56 sm:h-72 w-full">
+                        <canvas id="audienceFunnelChart"></canvas>
+                    </div>
+                </div>
+                <div class="panel min-w-0 reveal" style="transition-delay: 0.1s">
+                    <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_time">Игровое время (Часов/день)</h3>
+                    <div class="relative h-56 sm:h-72 w-full">
+                        <canvas id="playtimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8">
+                <div class="panel border-t-4 border-t-gray-500 bg-gradient-to-b from-[#6b72800a] to-transparent reveal">
+                    <h3 class="font-cyber text-lg sm:text-xl text-white mb-2" data-i18n="t_pc_h">PC-Арена (Киберспорт)</h3>
+                    <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-4" data-i18n="t_pc_p">Целевая аудитория: Хардкорные геймеры и дети экспатов. Монетизация идет за счет высокой стоимости аренды мощных ПК. Конверсия в бар средняя, так как фокус на игре.</p>
+                    <div class="relative h-48 w-full">
+                        <canvas id="conversionChart"></canvas>
+                    </div>
+                </div>
+                <div class="panel border-t-4 border-t-cybergreen bg-gradient-to-b from-[#00E6390a] to-transparent reveal" style="transition-delay: 0.1s">
+                    <h3 class="font-cyber text-lg sm:text-xl text-white mb-2" data-i18n="t_mob_h">Mobile Lounge (Социализация)</h3>
+                    <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-4" data-i18n="t_mob_p">Мобильный гейминг в Таиланде — это социальный феномен. Игроки приходят компаниями в лаунж. Заработок идет с феноменальной конверсии в еду, напитки (F&B) и зарядку.</p>
+                    <div class="relative h-48 w-full">
+                        <canvas id="esportsPotentialChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel w-full min-w-0 mb-8 reveal">
+                <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_occ">Модель суточной загрузки SCA (%)</h3>
+                <div class="relative h-56 sm:h-72 w-full">
+                    <canvas id="occupancyModelChart"></canvas>
+                </div>
+                <p class="text-gray-500 text-xs sm:text-sm mt-4 text-center" data-i18n="ch_occ_sub">*Расчет средней целевой загрузки клуба в 40% (показатель для финансовой модели).</p>
+            </div>
+            
+            <div class="panel w-full min-w-0 reveal" style="transition-delay: 0.1s">
+                <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_season">Влияние сезонности на загрузку (%)</h3>
+                <div class="relative h-56 sm:h-72 w-full">
+                    <canvas id="seasonalityChart"></canvas>
+                </div>
+                <p class="text-gray-500 text-xs sm:text-sm mt-4 text-center" data-i18n="ch_season_sub">*Локальный пик: школьные каникулы. Пик экспатов: туристический сезон.</p>
+            </div>
+        </div>
+
         <!-- СТРАНИЦА 2: СТРАТЕГИЯ -->
         <div id="page-esports" class="page-section hidden animate-fade-in">
             <header class="mb-8 border-b border-cyberdark pb-4 break-words reveal">
@@ -404,7 +429,7 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА 3: ТУРНИРЫ (РАСПИСАНИЕ) -->
+        <!-- СТРАНИЦА 3: ТУРНИРЫ -->
         <div id="page-tournaments" class="page-section hidden animate-fade-in">
             <header class="mb-8 border-b border-cyberdark pb-4 break-words reveal">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
@@ -418,9 +443,7 @@
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="tournaments-grid">
-                <!-- Карточки турниров -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="tournaments-grid"></div>
         </div>
 
         <!-- СТРАНИЦА 4: ЭКОНОМИКА И СЦЕНАРИИ -->
@@ -476,10 +499,17 @@
                     </div>
                 </div>
                 <div class="panel col-span-1 lg:col-span-2 min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-lg text-white mb-4 break-words" id="cashflow-chart-title">Накопительный CashFlow</h3>
+                    <h3 class="font-cyber text-base sm:text-lg text-white mb-4 break-words" id="seat-rev-title">Средний валовой приход с 1 места в день</h3>
                     <div class="relative h-56 sm:h-64 w-full">
-                        <canvas id="cashflowChart"></canvas>
+                        <canvas id="seatRevChart"></canvas>
                     </div>
+                </div>
+            </div>
+
+            <div class="panel w-full min-w-0 mb-8 reveal">
+                <h3 class="font-cyber text-base sm:text-lg text-white mb-4 break-words" id="cashflow-chart-title">Накопительный CashFlow</h3>
+                <div class="relative h-56 sm:h-64 w-full">
+                    <canvas id="cashflowChart"></canvas>
                 </div>
             </div>
             
@@ -496,21 +526,18 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА 5: ГАЛЕРЕЯ РЕНДЕРОВ -->
+        <!-- СТРАНИЦА 5: ГАЛЕРЕЯ -->
         <div id="page-gallery" class="page-section hidden animate-fade-in">
             <header class="mb-8 border-b border-cyberdark pb-4 break-words reveal">
                 <h2 class="text-2xl sm:text-3xl font-cyber text-white uppercase leading-tight" data-i18n="p5_h2"><span class="text-cybergreen">Визуализация</span> Арены</h2>
                 <p class="text-sm sm:text-lg text-gray-400 mt-2" data-i18n="p5_sub">Концепт-рендеры ключевых зон клуба.</p>
             </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="gallery-grid">
-                <!-- Карточки галереи генерируются через JS -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="gallery-grid"></div>
         </div>
 
     </main>
 
-    <!-- ПОЛНОЭКРАННЫЙ ЛАЙТБОКС (ГАЛЕРЕЯ) -->
+    <!-- ЛАЙТБОКС -->
     <div id="lightbox" class="fixed inset-0 z-[300] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
         <div class="absolute inset-0 bg-darkbg/95 backdrop-blur-md z-[290]" onclick="closeLightbox()"></div>
         <button onclick="closeLightbox()" class="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-cybergreen transition-colors z-[301] p-2 bg-black/50 rounded-full border border-gray-800">
@@ -528,77 +555,60 @@
         </div>
     </div>
 
-
     <script>
-        // --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ ВАЛЮТЫ И ЯЗЫКА ---
         let currentCurrency = 'THB';
-        let currentLang = 'en'; // Стартовый язык системы (для заставки)
-        const exchangeRate = 35; // 1 USD = 35 THB
+        let currentLang = 'en'; 
+        const exchangeRate = 35; 
         let currentActiveTab = 'audience';
 
         Chart.defaults.font.family = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
         Chart.defaults.color = '#9ca3af'; 
         Chart.defaults.maintainAspectRatio = false;
 
-        // ==========================================
-        // МАССИВ С ССЫЛКАМИ НА ТВОИ КАРТИНКИ
-        // ==========================================
         const galleryData = [
             { id: 0, url: 'https://i.ibb.co/m5jcj2GP/reception.png', key: 'gal_1' }, // 1. Ресепшн
             { id: 1, url: 'https://i.ibb.co/ZzPm1YsV/standard.png', key: 'gal_2' }, // 2. Стандартная зона
             { id: 2, url: 'https://i.ibb.co/ksBjtQxj/vip.png', key: 'gal_3' }, // 3. VIP Зона
-            { id: 3, url: 'https://i.ibb.co/fV9pSZQ2/mobile.png', key: 'gal_4' }  // 4. Моб. Гейминг
+            { id: 3, url: 'https://i.ibb.co/fV9pSZQ2/mobile.png', key: 'gal_4' }  // 4. Моб. Гейминг  
         ];
 
-        // --- СЛОВАРЬ (I18N) ---
         const i18n = {
             ru: {
-                ver_text: "Инвест-Дэшборд v4.8",
-                nav_aud: "Аудитория", nav_strat: "Стратегия", nav_tour: "Турниры", nav_fin: "Экономика", nav_gal: "Галерея",
+                ver_text: "Инвест-Дэшборд v5.2",
+                nav_aud: "Аудитория", nav_traf: "Трафик", nav_strat: "Стратегия", nav_tour: "Турниры", nav_fin: "Экономика", nav_gal: "Галерея",
                 stat_proj: "Статус проекта", stat_seed: "SEED РАУНД",
                 
                 w_title: "Samui Cyber Arena", w_desc: "Стратегический бизнес-концепт и финансовая модель премиального киберспортивного клуба.", w_scroll: "Скролльте для запуска",
                 
-                p1_h2: "<span class='text-cybergreen'>Анализ</span> рынка и аудитории",
-                p1_sub: "Рынок видеоигр Таиланда демонстрирует стабильный рост. Самуи — идеальный хаб для развития SCA.",
-                kpi_gamers: "Геймеров (Тайланд)", kpi_g_val: "41.0 млн+",
-                kpi_market: "Объем рынка (2033)", kpi_arpu: "ARPU (Доход)",
+                p1_h2: "<span class='text-cybergreen'>Анализ</span> рынка и аудитории", p1_sub: "Рынок видеоигр Таиланда демонстрирует стабильный рост. Самуи — идеальный хаб для развития SCA.",
+                kpi_gamers: "Геймеров (Тайланд)", kpi_g_val: "41.0 млн+", kpi_market: "Объем рынка (2033)", kpi_arpu: "ARPU (Доход)",
                 kpi_base: "База (Самуи)", kpi_b_val: "~15 тыс.", kpi_b_sub: "Школьники, экспаты",
+                ch_plat: "Приверженность к платформам", ch_genre: "Популярные жанры (Тайланд)", ch_motiv: "Мотивация тайских геймеров", 
+                ch_age: "Возрастные сегменты", ch_base: "Расклад базы (Самуи)", ch_local: "Возраст: Местные vs Экспаты",
                 
-                ch_plat: "Приверженность к платформам", ch_genre: "Популярные жанры (Тайланд)",
-                ch_motiv: "Мотивация тайских геймеров", ch_age: "Возрастные сегменты",
-                ch_base: "Расклад базы (Самуи)", ch_local: "Возраст: Местные vs Экспаты",
+                pt_h2: "<span class='text-cybergreen'>Трафик</span> и Загрузка", pt_sub: "Аналитика целевой аудитории, конверсий и паттернов посещаемости на Самуи.",
+                ch_funnel: "Воронка аудитории (Самуи)", ch_time: "Игровое время (Часов/день)", ch_occ: "Модель суточной загрузки SCA (%)", ch_occ_sub: "*Расчет средней целевой загрузки клуба в 40% (показатель для финансовой модели).",
+                t_pc_h: "PC-Арена (Киберспорт)", t_pc_p: "Целевая аудитория: Хардкорные геймеры и дети экспатов. Монетизация идет за счет высокой стоимости аренды мощных ПК. Конверсия в бар средняя, так как фокус на игре.",
+                t_mob_h: "Mobile Lounge (Социализация)", t_mob_p: "Мобильный гейминг в Таиланде — это социальный феномен. Игроки приходят компаниями в лаунж. Заработок идет с феноменальной конверсии в еду, напитки (F&B) и зарядку.",
                 
-                p2_h2: "<span class='text-cybergreen'>Стратегия</span> развития SCA",
-                p2_sub: "Формирование киберспортивной экосистемы, интеграция в образование и туризм.",
-                s_edu_h: "Образовательная интеграция",
-                s_edu_p: "Самуи — дом для престижных международных школ. Мы не просто компьютерный клуб, мы партнер в образовании. SCA запускает программы, встраиваясь в международную систему <b>BTEC Esports</b>. Это дает легальный трафик студентов, а родителям — понимание, что киберспорт это карьера в IT, а не \"игрушки\".",
-                s_tour_h: "Кибер-туризм и Буткемпы",
-                s_tour_p: "Таиланд — Мекка для зимовщиков. SCA станет премиум-площадкой для проведения <b>тренировочных буткемпов</b> про-команд из Европы и СНГ. Предлагая пакет \"ПК + Жилье + Еда + Море\", мы обеспечиваем 100% загрузку арены днем в сезон. Уникальное УТП на Юге.",
+                p2_h2: "<span class='text-cybergreen'>Стратегия</span> развития SCA", p2_sub: "Формирование киберспортивной экосистемы, интеграция в образование и туризм.",
+                s_edu_h: "Образовательная интеграция", s_edu_p: "Самуи — дом для престижных международных школ. Мы не просто компьютерный клуб, мы партнер в образовании. SCA запускает программы, встраиваясь в международную систему <b>BTEC Esports</b>.",
+                s_tour_h: "Кибер-туризм и Буткемпы", s_tour_p: "Таиланд — Мекка для зимовщиков. SCA станет премиум-площадкой для проведения <b>тренировочных буткемпов</b> про-команд из Европы и СНГ. Уникальное УТП на Юге.",
                 r_h: "5-летний план развития SCA Team",
                 r_y1_h: "Год 1: Локальная доминация", r_y1_p: "Отбор талантов среди школ Самуи. Еженедельные LAN-турниры. Формирование 2-х составов под тегом SCA (Dota 2, Valorant).",
                 r_y2_h: "Год 2: Выход на Юг Таиланда", r_y2_p: "Участие в турнирах Сураттани и Пхукета. Привлечение первых локальных B2B спонсоров в экосистему Samui Cyber Arena.",
                 r_y3_h: "Год 3: Национальные лиги", r_y3_p: "Квалификации на турниры уровня Thailand E-Sports Federation. Запуск стриминговой студии SCA. Продажа медиаправ.",
                 r_y4_h: "Год 4-5: SEA Регион и Франшизы", r_y4_p: "Выход на уровень Юго-Восточной Азии. Контракты с брендами периферии, интеграция с глобальными кибер-экосистемами.",
-                f_h: "Фундамент Успеха",
-                f_l1: "Официальная поддержка киберспорта правительством Таиланда.", f_l2: "Доступ к гос. грантам и инфраструктурным инвестициям.", f_l3: "<b>Нулевая конкуренция</b> про-уровня на острове Самуи.", f_l4: "Высокая покупательная способность экспат-сообщества.",
-                b2b_h: "Партнерства (B2B)", b2b_p: "Островная специфика открывает уникальные каналы монетизации:",
-                b2b_l1: "<b>Отели:</b> Пакетные гейминг-туры (bootcamp + vacation).", b2b_l2: "<b>Ритейл:</b> Кросс-промо с доставками еды и сервисами байков.", b2b_l3: "<b>Провайдеры:</b> Шоукейсы мощностей от AIS/True.",
+                f_h: "Фундамент Успеха", f_l1: "Официальная поддержка киберспорта правительством Таиланда.", f_l2: "Доступ к гос. грантам и инфраструктурным инвестициям.", f_l3: "<b>Нулевая конкуренция</b> про-уровня на острове Самуи.", f_l4: "Высокая покупательная способность экспат-сообщества.",
+                b2b_h: "Партнерства (B2B)", b2b_p: "Островная специфика открывает уникальные каналы монетизации:", b2b_l1: "<b>Отели:</b> Пакетные гейминг-туры (bootcamp + vacation).", b2b_l2: "<b>Ритейл:</b> Кросс-промо с доставками еды и сервисами байков.", b2b_l3: "<b>Провайдеры:</b> Шоукейсы мощностей от AIS/True.",
                 
-                p3_h2: "<span class='text-cybergreen'>Календарь</span> Турниров",
-                p3_sub: "Расписание соревнований для любительских и начинающих команд на Юге Таиланда.",
-                p3_live: "LIVE ОБНОВЛЕНИЕ",
-                t_fee: "Взнос (Команда)", t_prize: "Призовой фонд",
+                p3_h2: "<span class='text-cybergreen'>Календарь</span> Турниров", p3_sub: "Расписание соревнований для любительских и начинающих команд на Юге Таиланда.", p3_live: "LIVE ОБНОВЛЕНИЕ", t_fee: "Взнос (Команда)", t_prize: "Призовой фонд",
                 
-                p4_h2: "<span class='text-cybergreen'>Юнит-Экономика</span> SCA",
-                p4_sub: "Финансовые модели и расчет окупаемости арены. Выберите сценарий.",
-                scen_mini: "Мини (12 ПК)", scen_base: "База (20 ПК)", scen_pro: "Про (40 ПК)",
-                fin_inv: "Инвестиции", fin_rev: "Выручка (мес)", fin_exp: "Расходы (мес)", fin_prof: "Чистая прибыль", fin_roi: "Окупаемость",
-                ch_pie: "Выручка vs Расходы",
+                p4_h2: "<span class='text-cybergreen'>Юнит-Экономика</span> SCA", p4_sub: "Финансовые модели и расчет окупаемости арены. Выберите сценарий.",
+                scen_mini: "Мини (12 ПК)", scen_base: "База (20 ПК)", scen_pro: "Про (40 ПК)", fin_inv: "Инвестиции", fin_rev: "Выручка (мес)", fin_exp: "Расходы (мес)", fin_prof: "Чистая прибыль", fin_roi: "Окупаемость", ch_pie: "Выручка vs Расходы",
                 ass_h: "Ключевые допущения", ass_p1: "Цена за час:", ass_p2: "Сред. загрузка:", ass_p3: "Часов в день:", ass_p4: "Чек бара:", ass_v3: "16 ч.",
                 
-                p5_h2: "<span class='text-cybergreen'>Визуализация</span> Арены",
-                p5_sub: "Концепт-рендеры ключевых зон клуба.",
+                p5_h2: "<span class='text-cybergreen'>Визуализация</span> Арены", p5_sub: "Концепт-рендеры ключевых зон клуба.",
                 gal_1: "Ресепшн", gal_2: "Стандартная зона", gal_3: "VIP Зона", gal_4: "Зона мобильного гейминга",
 
                 mlrd: "млрд", mln: "млн", thous: "тыс.", mo: "мес.",
@@ -611,55 +621,54 @@
                 c_y1: "Год 1", c_y2: "Год 2", c_y3: "Год 3", c_y4: "Год 4", c_y5: "Год 5",
                 r_pc: "Аренда ПК", r_bar: "Бар + Снеки", r_merch: "Мерч / Академия", r_spons: "Спонсоры",
                 p_prof: "Чистая прибыль", p_exp: "Расходы (OPEX)",
-                market_title: "Объем рынка видеоигр Таиланда", fc_title: "Прогноз роста доходов и сегментация (5 лет)", cf_title: "Накопительный CashFlow SCA (24 месяца)"
+                market_title: "Объем рынка видеоигр Таиланда", fc_title: "Прогноз роста доходов и сегментация (5 лет)", cf_title: "Накопительный CashFlow SCA (24 месяца)",
+                
+                tf_pop: "Общее население (вкл. туристов и транзит)", tf_int: "Активные интернет-юзеры (геймеры)", tf_core: "Местная молодежь 0-24", tf_target: "Наша целевая база",
+                tc_pc: "ПК Арена", tc_mob: "Мобильный Лаунж", tc_rent: "Конверсия Аренда", tc_fb: "Конверсия Бар (F&B)",
+                th_1: "< 1 часа", th_2: "1-2 часа", th_3: "2-4 часа", th_4: "4+ часов (Хардкор)",
+                to_wd: "Будни", to_we: "Выходные",
+                ts_c: "Казуалы", ts_p: "Киберспорт-потенциал",
+                ch_season: "Влияние сезонности на загрузку (%)", ch_season_sub: "*Локальный пик: школьные каникулы (Март-Май, Окт). Пик экспатов: туристический сезон.",
+                season_loc: "Местные игроки", season_exp: "Экспаты и туристы",
+                months: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                ch_seat: "Средний валовый приход с 1 места (в день)", seat_pc: "ПК-место", seat_mob: "Мобильное место", rev_rent: "Аренда", rev_fb: "Бар и Снеки"
             },
             en: {
-                ver_text: "Invest-Dashboard v4.8",
-                nav_aud: "Audience", nav_strat: "Strategy", nav_tour: "Tournaments", nav_fin: "Finance", nav_gal: "Gallery",
+                ver_text: "Invest-Dashboard v5.0",
+                nav_aud: "Audience", nav_traf: "Traffic", nav_strat: "Strategy", nav_tour: "Tournaments", nav_fin: "Finance", nav_gal: "Gallery",
                 stat_proj: "Project Status", stat_seed: "SEED ROUND",
                 
                 w_title: "Samui Cyber Arena", w_desc: "Strategic business concept and financial model of a premium esports club.", w_scroll: "Scroll to unlock",
 
-                p1_h2: "<span class='text-cybergreen'>Market</span> & Audience Analysis",
-                p1_sub: "Thailand's video game market shows steady growth. Samui is the perfect hub for SCA development.",
-                kpi_gamers: "Gamers (Thailand)", kpi_g_val: "41.0 M+",
-                kpi_market: "Market Size (2033)", kpi_arpu: "ARPU (Revenue)",
+                p1_h2: "<span class='text-cybergreen'>Market</span> & Audience Analysis", p1_sub: "Thailand's video game market shows steady growth. Samui is the perfect hub for SCA development.",
+                kpi_gamers: "Gamers (Thailand)", kpi_g_val: "41.0 M+", kpi_market: "Market Size (2033)", kpi_arpu: "ARPU (Revenue)",
                 kpi_base: "Base (Samui)", kpi_b_val: "~15 k.", kpi_b_sub: "Students, Expats",
+                ch_plat: "Platform Preference", ch_genre: "Popular Genres (Thailand)", ch_motiv: "Thai Gamer Motivation", 
+                ch_age: "Age Demographics", ch_base: "Audience Breakdown (Samui)", ch_local: "Age: Locals vs Expats",
                 
-                ch_plat: "Platform Preference", ch_genre: "Popular Genres (Thailand)",
-                ch_motiv: "Thai Gamer Motivation", ch_age: "Age Demographics",
-                ch_base: "Audience Breakdown (Samui)", ch_local: "Age: Locals vs Expats",
+                pt_h2: "Traffic & <span class='text-cybergreen'>Occupancy</span>", pt_sub: "Analysis of target audience, conversions, and attendance patterns on Samui.",
+                ch_funnel: "Audience Funnel (Samui)", ch_time: "Playtime (Hours/Day)", ch_occ: "SCA Daily Occupancy Model (%)", ch_occ_sub: "*Calculation of the average target club occupancy of 40% (indicator for the financial model).",
+                t_pc_h: "PC-Arena (Esports)", t_pc_p: "Target audience: Hardcore gamers and expat kids. Monetization comes from the high rental cost of powerful PCs. Bar conversion is medium, as the focus is on the game.",
+                t_mob_h: "Mobile Lounge (Social)", t_mob_p: "Mobile gaming in Thailand is a social phenomenon. Players come in groups to the lounge. Earnings come from phenomenal conversion into food, drinks (F&B), and charging.",
                 
-                p2_h2: "<span class='text-cybergreen'>Strategy</span> of SCA Development",
-                p2_sub: "Forming an esports ecosystem, integrating into education and tourism.",
-                s_edu_h: "Educational Integration",
-                s_edu_p: "Samui is home to prestigious international schools. We are an educational partner. SCA launches programs integrating into the <b>BTEC Esports</b> global system. This provides legal student traffic and shows parents that esports is an IT career, not just \"games\".",
-                s_tour_h: "Cyber Tourism & Bootcamps",
-                s_tour_p: "Thailand is a Mecca for remote workers. SCA will become a premium venue for <b>training bootcamps</b> for pro-teams from EU/CIS. By offering a \"PC + Housing + Food + Sea\" package, we ensure 100% daytime occupancy during the high season.",
+                p2_h2: "<span class='text-cybergreen'>Strategy</span> of SCA Development", p2_sub: "Forming an esports ecosystem, integrating into education and tourism.",
+                s_edu_h: "Educational Integration", s_edu_p: "Samui is home to prestigious international schools. We are an educational partner. SCA launches programs integrating into the <b>BTEC Esports</b> global system.",
+                s_tour_h: "Cyber Tourism & Bootcamps", s_tour_p: "Thailand is a Mecca for remote workers. SCA will become a premium venue for <b>training bootcamps</b> for pro-teams from EU/CIS. Unique USP in the South.",
                 r_h: "5-Year SCA Team Development Plan",
                 r_y1_h: "Year 1: Local Domination", r_y1_p: "Talent scouting in Samui schools. Weekly LAN tournaments. Forming 2 rosters under the SCA tag (Dota 2, Valorant).",
-                r_y2_h: "Year 2: South Thailand Expansion", r_y2_p: "Participation in Surat Thani and Phuket tournaments. Attracting the first local B2B sponsors to the Samui Cyber Arena ecosystem.",
-                r_y3_h: "Year 3: National Leagues", r_y3_p: "Qualifiers for Thailand E-Sports Federation level tournaments. Launching the SCA streaming studio. Selling media rights.",
+                r_y2_h: "Year 2: South Thailand Expansion", r_y2_p: "Participation in Surat Thani and Phuket tournaments. Attracting the first local B2B sponsors.",
+                r_y3_h: "Year 3: National Leagues", r_y3_p: "Qualifiers for Thailand E-Sports Federation level tournaments. Launching the SCA streaming studio.",
                 r_y4_h: "Year 4-5: SEA Region & Franchises", r_y4_p: "Entering the Southeast Asian level. Contracts with peripheral brands, integration with global cyber ecosystems.",
-                f_h: "Foundation of Success",
-                f_l1: "Official esports support from the Thai government.", f_l2: "Access to state grants and infrastructure investments.", f_l3: "<b>Zero pro-level competition</b> on Koh Samui.", f_l4: "High purchasing power of the expat community.",
-                b2b_h: "Partnerships (B2B)", b2b_p: "Island specifics open unique monetization channels:",
-                b2b_l1: "<b>Hotels:</b> Package gaming tours (bootcamp + vacation).", b2b_l2: "<b>Retail:</b> Cross-promo with food deliveries and bike services.", b2b_l3: "<b>Providers:</b> Capacity showcases from AIS/True.",
+                f_h: "Foundation of Success", f_l1: "Official esports support from the Thai government.", f_l2: "Access to state grants and infrastructure investments.", f_l3: "<b>Zero pro-level competition</b> on Koh Samui.", f_l4: "High purchasing power of the expat community.",
+                b2b_h: "Partnerships (B2B)", b2b_p: "Island specifics open unique monetization channels:", b2b_l1: "<b>Hotels:</b> Package gaming tours (bootcamp + vacation).", b2b_l2: "<b>Retail:</b> Cross-promo with food deliveries and bike services.", b2b_l3: "<b>Providers:</b> Capacity showcases from AIS/True.",
                 
-                p3_h2: "<span class='text-cybergreen'>Tournament</span> Calendar",
-                p3_sub: "Competition schedule for amateur and beginner teams in Southern Thailand.",
-                p3_live: "LIVE UPDATE",
-                t_fee: "Entry Fee (Team)", t_prize: "Prize Pool",
+                p3_h2: "<span class='text-cybergreen'>Tournament</span> Calendar", p3_sub: "Competition schedule for amateur and beginner teams in Southern Thailand.", p3_live: "LIVE UPDATE", t_fee: "Entry Fee (Team)", t_prize: "Prize Pool",
                 
-                p4_h2: "SCA <span class='text-cybergreen'>Unit Economics</span>",
-                p4_sub: "Financial models and arena payback calculation. Choose a scenario.",
-                scen_mini: "Mini (12 PC)", scen_base: "Base (20 PC)", scen_pro: "Pro (40 PC)",
-                fin_inv: "Investments", fin_rev: "Revenue (mo)", fin_exp: "Expenses (mo)", fin_prof: "Net Profit", fin_roi: "ROI (Months)",
-                ch_pie: "Revenue vs Expenses",
+                p4_h2: "SCA <span class='text-cybergreen'>Unit Economics</span>", p4_sub: "Financial models and arena payback calculation. Choose a scenario.",
+                scen_mini: "Mini (12 PC)", scen_base: "Base (20 PC)", scen_pro: "Pro (40 PC)", fin_inv: "Investments", fin_rev: "Revenue (mo)", fin_exp: "Expenses (mo)", fin_prof: "Net Profit", fin_roi: "ROI (Months)", ch_pie: "Revenue vs Expenses",
                 ass_h: "Key Assumptions", ass_p1: "Price per hour:", ass_p2: "Avg. Occupancy:", ass_p3: "Hours per day:", ass_p4: "Bar Check:", ass_v3: "16 h.",
                 
-                p5_h2: "Arena <span class='text-cybergreen'>Visualization</span>",
-                p5_sub: "Concept renders of the club's key zones.",
+                p5_h2: "Arena <span class='text-cybergreen'>Visualization</span>", p5_sub: "Concept renders of the club's key zones.",
                 gal_1: "Reception", gal_2: "Standard Zone", gal_3: "VIP Zone", gal_4: "Mobile Gaming Zone",
 
                 mlrd: "B", mln: "M", thous: "k", mo: "mo.",
@@ -672,55 +681,54 @@
                 c_y1: "Year 1", c_y2: "Year 2", c_y3: "Year 3", c_y4: "Year 4", c_y5: "Year 5",
                 r_pc: "PC Rent", r_bar: "Bar & Snacks", r_merch: "Merch & Academy", r_spons: "Sponsors",
                 p_prof: "Net Profit", p_exp: "Expenses (OPEX)",
-                market_title: "Thailand Video Game Market Size", fc_title: "Revenue Growth Forecast & Segments (5 yrs)", cf_title: "Cumulative SCA CashFlow (24 months)"
+                market_title: "Thailand Video Game Market Size", fc_title: "Revenue Growth Forecast & Segments (5 yrs)", cf_title: "Cumulative SCA CashFlow (24 months)",
+                
+                tf_pop: "Total Population (+ Transit/Tourists)", tf_int: "Active Internet Users (Gamers)", tf_core: "Local Youth 0-24", tf_target: "Our Target Base",
+                tc_pc: "PC Arena", tc_mob: "Mobile Lounge", tc_rent: "Rent Conversion", tc_fb: "F&B Conversion",
+                th_1: "< 1 hour", th_2: "1-2 hours", th_3: "2-4 hours", th_4: "4+ hours (Hardcore)",
+                to_wd: "Weekdays", to_we: "Weekends",
+                ts_c: "Casuals", ts_p: "Esports Potential",
+                ch_season: "Seasonality Impact on Occupancy (%)", ch_season_sub: "*Local peak: school holidays. Expat peak: high tourist season.",
+                season_loc: "Local Gamers", season_exp: "Expats & Tourists",
+                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                ch_seat: "Average Gross Revenue per Seat (Daily)", seat_pc: "PC Seat", seat_mob: "Mobile Seat", rev_rent: "Rental", rev_fb: "F&B"
             },
             th: {
-                ver_text: "แดชบอร์ดการลงทุน v4.8",
-                nav_aud: "ผู้ชม", nav_strat: "กลยุทธ์", nav_tour: "ทัวร์นาเมนต์", nav_fin: "การเงิน", nav_gal: "แกลเลอรี่",
+                ver_text: "แดชบอร์ดการลงทุน v5.0",
+                nav_aud: "ผู้ชม", nav_traf: "ทราฟฟิก", nav_strat: "กลยุทธ์", nav_tour: "ทัวร์นาเมนต์", nav_fin: "การเงิน", nav_gal: "แกลเลอรี่",
                 stat_proj: "สถานะโครงการ", stat_seed: "รอบ SEED",
                 
                 w_title: "สมุย ไซเบอร์ อารีน่า", w_desc: "แนวคิดธุรกิจเชิงกลยุทธ์และแบบจำลองทางการเงินของสโมสรอีสปอร์ตระดับพรีเมียม", w_scroll: "เลื่อนลงเพื่อปลดล็อก",
 
-                p1_h2: "<span class='text-cybergreen'>วิเคราะห์</span> ตลาดและผู้ชม",
-                p1_sub: "ตลาดวิดีโอเกมของไทยมีการเติบโตอย่างต่อเนื่อง สมุยเป็นศูนย์กลางที่สมบูรณ์แบบสำหรับการพัฒนา SCA",
-                kpi_gamers: "เกมเมอร์ (ไทย)", kpi_g_val: "41.0 ล้าน+",
-                kpi_market: "มูลค่าตลาด (2033)", kpi_arpu: "รายได้เฉลี่ย (ARPU)",
+                p1_h2: "<span class='text-cybergreen'>วิเคราะห์</span> ตลาดและผู้ชม", p1_sub: "ตลาดวิดีโอเกมของไทยมีการเติบโตอย่างต่อเนื่อง สมุยเป็นศูนย์กลางที่สมบูรณ์แบบสำหรับการพัฒนา SCA",
+                kpi_gamers: "เกมเมอร์ (ไทย)", kpi_g_val: "41.0 ล้าน+", kpi_market: "มูลค่าตลาด (2033)", kpi_arpu: "รายได้เฉลี่ย (ARPU)",
                 kpi_base: "ฐานลูกค้า (สมุย)", kpi_b_val: "~15 พัน", kpi_b_sub: "นักเรียน, ชาวต่างชาติ",
+                ch_plat: "ความชอบแพลตฟอร์ม", ch_genre: "ประเภทเกมยอดนิยม (ไทย)", ch_motiv: "แรงจูงใจของเกมเมอร์ชาวไทย", 
+                ch_age: "กลุ่มอายุ", ch_base: "สัดส่วนผู้ชม (สมุย)", ch_local: "อายุ: คนท้องถิ่น vs ชาวต่างชาติ",
                 
-                ch_plat: "ความชอบแพลตฟอร์ม", ch_genre: "ประเภทเกมยอดนิยม (ไทย)",
-                ch_motiv: "แรงจูงใจของเกมเมอร์ชาวไทย", ch_age: "กลุ่มอายุ",
-                ch_base: "สัดส่วนผู้ชม (สมุย)", ch_local: "อายุ: คนท้องถิ่น vs ชาวต่างชาติ",
+                pt_h2: "<span class='text-cybergreen'>ทราфฟิก</span> และการเข้าใช้", pt_sub: "การวิเคราะห์กลุ่มเป้าหมาย คอนเวอร์ชั่น และรูปแบบการเข้าใช้บริการบนเกาะสมุย",
+                ch_funnel: "ช่องทางผู้ชม (สมุย)", ch_time: "เวลาเล่นเกม (ชั่วโมง/วัน)", ch_occ: "โมเดลการเข้าใช้ SCA รายวัน (%)", ch_occ_sub: "*การคำนวณการเข้าใช้คลับเป้าหมายเฉลี่ย 40% (ตัวชี้วัดสำหรับแบบจำลองทางการเงิน)",
+                t_pc_h: "พีซี-อารีน่า (อีสปอร์ต)", t_pc_p: "กลุ่มเป้าหมาย: เกมเมอร์ฮาร์ดคอร์และเด็กต่างชาติ การสร้างรายได้มาจากค่าเช่าพีซี การแปลงเป็นบาร์อยู่ในระดับปานกลาง",
+                t_mob_h: "โมบายเลานจ์ (สังคม)", t_mob_p: "การเล่นเกมมือถือ เป็นปรากฏการณ์ทางสังคม รายได้มาจากการแปลงเป็นอาหาร เครื่องดื่ม (F&B) ที่สูงมาก",
                 
-                p2_h2: "<span class='text-cybergreen'>กลยุทธ์</span> การพัฒนา SCA",
-                p2_sub: "การสร้างระบบนิเวศอีสปอร์ต บูรณาการเข้ากับการศึกษาและการท่องเที่ยว",
-                s_edu_h: "การบูรณาการทางการศึกษา",
-                s_edu_p: "สมุยเป็นที่ตั้งของโรงเรียนนานาชาติที่มีชื่อเสียง เราเป็นพันธมิตรด้านการศึกษา SCA เปิดตัวโปรแกรมที่รวมเข้ากับระบบระดับโลก <b>BTEC Esports</b> สิ่งนี้ให้การเข้าถึงของนักเรียนที่ถูกต้องตามกฎหมายและแสดงให้ผู้ปกครองเห็นว่าอีสปอร์ตเป็นอาชีพด้านไอที",
-                s_tour_h: "การท่องเที่ยวไซเบอร์และบูตแคมป์",
-                s_tour_p: "ประเทศไทยเป็นเมกกะสำหรับผู้ทำงานทางไกล SCA จะกลายเป็นสถานที่ระดับพรีเมียมสำหรับ <b>บูตแคมป์ฝึกซ้อม</b> สำหรับทีมโปรจากยุโรปและ CIS ด้วยการเสนอแพ็คเกจ \"PC + ที่พัก + อาหาร + ทะเล\" เรามั่นใจว่าจะมีผู้เข้าพัก 100% ในช่วงกลางวันของฤดูท่องเที่ยว",
+                p2_h2: "<span class='text-cybergreen'>กลยุทธ์</span> การพัฒนา SCA", p2_sub: "การสร้างระบบนิเวศอีสปอร์ต บูรณาการเข้ากับการศึกษาและการท่องเที่ยว",
+                s_edu_h: "การบูรณาการทางการศึกษา", s_edu_p: "สมุยเป็นที่ตั้งของโรงเรียนนานาชาติที่มีชื่อเสียง SCA เปิดตัวโปรแกรมที่รวมเข้ากับระบบระดับโลก <b>BTEC Esports</b>",
+                s_tour_h: "การท่องเที่ยวไซเบอร์และบูตแคมป์", s_tour_p: "ประเทศไทยเป็นเมกกะสำหรับผู้ทำงานทางไกล SCA จะกลายเป็นสถานที่ระดับพรีเมียมสำหรับ <b>บูตแคมป์ฝึกซ้อม</b> สำหรับทีมโปร",
                 r_h: "แผนพัฒนาทีม SCA 5 ปี",
-                r_y1_h: "ปีที่ 1: การครอบงำในท้องถิ่น", r_y1_p: "การค้นหาพรสวรรค์ในโรงเรียนบนเกาะสมุย การแข่งขัน LAN รายสัปดาห์ การตั้ง 2 ทีมภายใต้แท็ก SCA (Dota 2, Valorant)",
-                r_y2_h: "ปีที่ 2: การขยายสู่ภาคใต้", r_y2_p: "เข้าร่วมการแข่งขันที่สุราษฎร์ธานีและภูเก็ต ดึงดูดผู้สนับสนุน B2B ในท้องถิ่นรายแรกเข้าสู่ระบบนิเวศ Samui Cyber Arena",
-                r_y3_h: "ปีที่ 3: ลีกระดับชาติ", r_y3_p: "รอบคัดเลือกสำหรับการแข่งขันระดับสมาคมกีฬาอีสปอร์ตแห่งประเทศไทย การเปิดตัวสตูดิโอสตรีมมิ่ง SCA การขายสิทธิ์สื่อ",
-                r_y4_h: "ปีที่ 4-5: ภูมิภาคอาเซียนและแฟรนไชส์", r_y4_p: "ก้าวสู่ระดับเอเชียตะวันออกเฉียงใต้ ทำสัญญากับแบรนด์อุปกรณ์ต่อพ่วง บูรณาการกับระบบนิเวศไซเบอร์ระดับโลก",
-                f_h: "รากฐานแห่งความสำเร็จ",
-                f_l1: "การสนับสนุนอีสปอร์ตอย่างเป็นทางการจากรัฐบาลไทย", f_l2: "การเข้าถึงเงินอุดหนุนจากรัฐและการลงทุนโครงสร้างพื้นฐาน", f_l3: "<b>ไม่มีคู่แข่งระดับโปร</b> บนเกาะสมุย", f_l4: "กำลังซื้อสูงของชุมชนชาวต่างชาติ",
-                b2b_h: "พันธมิตร (B2B)", b2b_p: "ความเฉพาะเจาะจงของเกาะเปิดช่องทางการสร้างรายได้ที่ไม่เหมือนใคร:",
-                b2b_l1: "<b>โรงแรม:</b> แพ็คเกจทัวร์เกม (บูตแคมป์ + วันหยุดพักผ่อน)", b2b_l2: "<b>ค้าปลีก:</b> โปรโมชั่นข้ามสายกับบริการส่งอาหารและมอเตอร์ไซค์", b2b_l3: "<b>ผู้ให้บริการเครือข่าย:</b> การแสดงศักยภาพจาก AIS/True",
+                r_y1_h: "ปีที่ 1: การครอบงำในท้องถิ่น", r_y1_p: "การค้นหาพรсวรรค์ในโรงเรียนบนเกาะสมุย การแข่งขัน LAN รายสัปดาห์ การตั้ง 2 ทีมภายใต้แท็ก SCA",
+                r_y2_h: "ปีที่ 2: การขยายสู่ภาคใต้", r_y2_p: "เข้าร่วมการแข่งขันที่สุราษฎร์ธานีและภูเก็ต ดึงดูดผู้สนับสนุน B2B ในท้องถิ่นรายแรก",
+                r_y3_h: "ปีที่ 3: ลีกระดับชาติ", r_y3_p: "รอบคัดเลือกสำหรับการแข่งขันระดับชาติ การเปิดตัวสตูดิโอสตรีมมิ่ง SCA",
+                r_y4_h: "ปีที่ 4-5: ภูมิภาคอาเซียน", r_y4_p: "ก้าวสู่ระดับเอเชียตะวันออกเฉียงใต้ ทำสัญญากับแบรนด์อุปกรณ์ต่อพ่วง",
+                f_h: "รากฐานแห่งความสำเร็จ", f_l1: "การสนับสนุนอีสปอร์ตอย่างเป็นทางการจากรัฐบาลไทย", f_l2: "การเข้าถึงเงินอุดหนุนจากรัฐ", f_l3: "<b>ไม่มีคู่แข่งระดับโปร</b> บนเกาะสมุย", f_l4: "กำลังซื้อสูงของชุมชนชาวต่างชาติ",
+                b2b_h: "พันธมิตร (B2B)", b2b_p: "ความเฉพาะเจาะจงของเกาะเปิดช่องทางการสร้างรายได้ที่ไม่เหมือนใคร:", b2b_l1: "<b>โรงแรม:</b> แพ็คเกจทัวร์เกม", b2b_l2: "<b>ค้าปลีก:</b> โปรโมชั่นข้ามสายกับบริการส่งอาหาร", b2b_l3: "<b>ผู้ให้บริการเครือข่าย:</b> การแสดงศักยภาพจาก AIS/True",
                 
-                p3_h2: "<span class='text-cybergreen'>ปฏิทิน</span> ทัวร์นาเมนต์",
-                p3_sub: "ตารางการแข่งขันสำหรับทีมสมัครเล่นและทีมหน้าใหม่ในภาคใต้ของประเทศไทย",
-                p3_live: "อัปเดตสด",
-                t_fee: "ค่าสมัคร (ทีม)", t_prize: "เงินรางวัลรวม",
+                p3_h2: "<span class='text-cybergreen'>ปฏิทิน</span> ทัวร์นาเมนต์", p3_sub: "ตารางการแข่งขันสำหรับทีมสมัครเล่นและทีมหน้าใหม่ในภาคใต้ของประเทศไทย", p3_live: "อัปเดตสด", t_fee: "ค่าสมัคร (ทีม)", t_prize: "เงินรางวัลรวม",
                 
-                p4_h2: "<span class='text-cybergreen'>เศรษฐศาสตร์หน่วย</span> SCA",
-                p4_sub: "โมเดลทางการเงินและการคำนวณการคืนทุนของอารีน่า เลือกสถานการณ์",
-                scen_mini: "มินิ (12 พีซี)", scen_base: "พื้นฐาน (20 พีซี)", scen_pro: "โปร (40 พีซี)",
-                fin_inv: "การลงทุน", fin_rev: "รายได้ (เดือน)", fin_exp: "ค่าใช้จ่าย (เดือน)", fin_prof: "กำไรสุทธิ", fin_roi: "ระยะเวลาคืนทุน",
-                ch_pie: "รายได้ vs ค่าใช้จ่าย",
+                p4_h2: "<span class='text-cybergreen'>เศรษฐศาสตร์หน่วย</span> SCA", p4_sub: "โมเดลทางการเงินและการคำนวณการคืนทุนของอารีน่า เลือกสถานการณ์",
+                scen_mini: "มินิ (12 พีซี)", scen_base: "พื้นฐาน (20 พีซี)", scen_pro: "โปร (40 พีซี)", fin_inv: "การลงทุน", fin_rev: "รายได้ (เดือน)", fin_exp: "ค่าใช้จ่าย (เดือน)", fin_prof: "กำไรสุทธิ", fin_roi: "ระยะเวลาคืนทุน", ch_pie: "รายได้ vs ค่าใช้จ่าย",
                 ass_h: "สมมติฐานหลัก", ass_p1: "ราคาต่อชั่วโมง:", ass_p2: "อัตราการเข้าใช้:", ass_p3: "ชั่วโมงต่อวัน:", ass_p4: "บิลเฉลี่ยบาร์:", ass_v3: "16 ช.ม.",
                 
-                p5_h2: "<span class='text-cybergreen'>ภาพจำลอง</span> อารีน่า",
-                p5_sub: "ภาพเรนเดอร์แนวคิดของโซนหลักในคลับ",
+                p5_h2: "<span class='text-cybergreen'>ภาพจำลอง</span> อารีน่า", p5_sub: "ภาพเรนเดอร์แนวคิดของโซนหลักในคลับ",
                 gal_1: "แผนกต้อนรับ", gal_2: "โซนมาตรฐาน", gal_3: "โซนวีไอพี", gal_4: "โซนเกมมือถือ",
 
                 mlrd: "พันล้าน", mln: "ล้าน", thous: "พัน", mo: "เดือน",
@@ -733,7 +741,17 @@
                 c_y1: "ปีที่ 1", c_y2: "ปีที่ 2", c_y3: "ปีที่ 3", c_y4: "ปีที่ 4", c_y5: "ปีที่ 5",
                 r_pc: "เช่าเครื่องพีซี", r_bar: "บาร์และของว่าง", r_merch: "สินค้า / สถาบัน", r_spons: "ผู้สนับสนุน",
                 p_prof: "กำไรสุทธิ", p_exp: "ค่าใช้จ่าย (OPEX)",
-                market_title: "มูลค่าตลาดวิดีโอเกมในประเทศไทย", fc_title: "คาดการณ์การเติบโตของรายได้และกลุ่ม (5 ปี)", cf_title: "กระแสเงินสดสะสม SCA (24 เดือน)"
+                market_title: "มูลค่าตลาดวิดีโอเกมในประเทศไทย", fc_title: "คาดการณ์การเติบโตของรายได้ (5 ปี)", cf_title: "กระแสเงินสดสะสม SCA (24 เดือน)",
+                
+                tf_pop: "ประชากรรวม (รวมผู้สัญจร)", tf_int: "ผู้ใช้อินเทอร์เน็ต (เกมเมอร์)", tf_core: "เยาวชน (0-24)", tf_target: "ฐานเป้าหมายของเรา",
+                tc_pc: "พีซี อารีน่า", tc_mob: "โมบายเลานจ์", tc_rent: "คอนเวอร์ชั่นเช่า", tc_fb: "คอนเวอร์ชั่น F&B",
+                th_1: "< 1 ชั่วโมง", th_2: "1-2 ชั่วโมง", th_3: "2-4 ชั่วโมง", th_4: "4+ ชั่วโมง (ฮาร์ดคอร์)",
+                to_wd: "วันธรรมดา", to_we: "วันหยุด",
+                ts_c: "ผู้เล่นทั่วไป", ts_p: "ศักยภาพอีสปอร์ต",
+                ch_season: "ผลกระทบตามฤดูกาลต่อการเข้าใช้คลับ (%)", ch_season_sub: "*สูงสุดในท้องถิ่น: ปิดเทอม สูงสุดของชาวต่างชาติ: ฤดูท่องเที่ยว",
+                season_loc: "ผู้เล่นท้องถิ่น", season_exp: "ชาวต่างชาติ",
+                months: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'],
+                ch_seat: "รายได้รวมเฉลี่ยต่อที่นั่ง (รายวัน)", seat_pc: "ที่นั่งพีซี", seat_mob: "ที่นั่งมือถือ", rev_rent: "ค่าเช่า", rev_fb: "อาหารและเครื่องดื่ม"
             }
         };
 
@@ -742,8 +760,8 @@
         // --- ЛОГИКА WELCOME SCREEN ---
         const welcomeScreen = document.getElementById('welcome-screen');
         let welcomeDismissed = false;
-        let hasDismissedOnce = false; // Флаг для первого автопереключения языка
-        let userSelectedLang = false; // Выбирал ли юзер язык на экране загрузки
+        let hasDismissedOnce = false; 
+        let userSelectedLang = false; 
 
         function dismissWelcome() {
             if(welcomeDismissed) return;
@@ -751,8 +769,6 @@
             welcomeScreen.classList.add('opacity-0');
             setTimeout(() => welcomeScreen.classList.add('hidden'), 700);
 
-            // АВТОПЕРЕКЛЮЧЕНИЕ НА РУССКИЙ: Срабатывает только 1 раз при первом скролле
-            // и только если юзер не выбрал другой язык вручную
             if (!hasDismissedOnce && !userSelectedLang && currentLang === 'en') {
                 setLang('ru');
             }
@@ -766,12 +782,11 @@
         }
 
         function setWelcomeLang(lang, event) {
-            if(event) event.stopPropagation(); // Чтобы клик не вызывал скрытие заставки
+            if(event) event.stopPropagation(); 
             userSelectedLang = true; 
             setLang(lang);
         }
 
-        // Слушатели для закрытия заставки
         window.addEventListener('wheel', () => { if(!welcomeDismissed) dismissWelcome(); });
         window.addEventListener('touchmove', () => { if(!welcomeDismissed) dismissWelcome(); });
         window.addEventListener('keydown', (e) => {
@@ -781,38 +796,29 @@
             if(!welcomeDismissed && e.target === welcomeScreen) dismissWelcome();
         });
 
-        // Открытие заставки по клику на лого
         document.getElementById('logo-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            showWelcome();
+            e.preventDefault(); showWelcome();
         });
 
         // --- ЛОГИКА СМЕНЫ ЯЗЫКА ---
         function setLang(lang) {
             currentLang = lang;
             
-            // Основной переключатель в левом меню
             ['ru', 'en', 'th'].forEach(l => {
                 const btn = document.getElementById('btn-lang-' + l);
                 if(btn) {
                     if(l === lang) {
-                        btn.classList.add('active', 'bg-cybergreen', 'text-darkbg');
-                        btn.classList.remove('text-gray-400');
+                        btn.classList.add('active', 'bg-cybergreen', 'text-darkbg'); btn.classList.remove('text-gray-400');
                     } else {
-                        btn.classList.remove('active', 'bg-cybergreen', 'text-darkbg');
-                        btn.classList.add('text-gray-400');
+                        btn.classList.remove('active', 'bg-cybergreen', 'text-darkbg'); btn.classList.add('text-gray-400');
                     }
                 }
-
-                // Переключатель на заставке Welcome Screen
                 const wBtn = document.getElementById('w-lang-' + l);
                 if(wBtn) {
                     if(l === lang) {
-                        wBtn.classList.add('active', 'text-cybergreen', 'drop-shadow-[0_0_5px_rgba(0,230,57,0.8)]');
-                        wBtn.classList.remove('text-gray-500');
+                        wBtn.classList.add('active', 'text-cybergreen', 'drop-shadow-[0_0_5px_rgba(0,230,57,0.8)]'); wBtn.classList.remove('text-gray-500');
                     } else {
-                        wBtn.classList.remove('active', 'text-cybergreen', 'drop-shadow-[0_0_5px_rgba(0,230,57,0.8)]');
-                        wBtn.classList.add('text-gray-500');
+                        wBtn.classList.remove('active', 'text-cybergreen', 'drop-shadow-[0_0_5px_rgba(0,230,57,0.8)]'); wBtn.classList.add('text-gray-500');
                     }
                 }
             });
@@ -825,6 +831,7 @@
             updateStaticCurrencyData();
             renderTournaments();
             if (currentActiveTab === 'audience') renderAudienceCharts();
+            if (currentActiveTab === 'traffic') renderTrafficCharts();
             if (currentActiveTab === 'finance') updateFinanceData(); 
             if (currentActiveTab === 'gallery') renderGallery(); 
         }
@@ -838,7 +845,6 @@
             { id: 6, title: 'SCA Academy Draft', loc: 'Samui / สมุย', date: 'Май/May/พ.ค. 2027', game: 'Valorant', fee: 0, prize: 5000, status: 'Promo' }
         ];
 
-        // --- Intersection Observer ---
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
@@ -867,6 +873,7 @@
             updateStaticCurrencyData();
             renderTournaments();
             if (currentActiveTab === 'audience') renderAudienceCharts();
+            if (currentActiveTab === 'traffic') renderTrafficCharts();
             if (currentActiveTab === 'finance') updateFinanceData(); 
         }
 
@@ -999,18 +1006,18 @@
             if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') changeImage(1);
         });
 
-        // --- ЛОГИКА СВАЙПА ДЛЯ МОБИЛОК (ПЕРЕКЛЮЧЕНИЕ ТАБОВ) ---
+        // --- ЛОГИКА СВАЙПА ДЛЯ МОБИЛОК ---
         let touchstartX = 0;
         let touchendX = 0;
-        const appTabs = ['audience', 'esports', 'tournaments', 'finance', 'gallery'];
+        const appTabs = ['audience', 'traffic', 'esports', 'tournaments', 'finance', 'gallery'];
 
         document.addEventListener('touchstart', e => {
-            if(e.target.closest('canvas') || e.target.closest('#lightbox')) return;
+            if(e.target.closest('canvas') || e.target.closest('#lightbox') || !welcomeDismissed) return;
             touchstartX = e.changedTouches[0].screenX;
         });
 
         document.addEventListener('touchend', e => {
-            if(e.target.closest('canvas') || e.target.closest('#lightbox')) return;
+            if(e.target.closest('canvas') || e.target.closest('#lightbox') || !welcomeDismissed) return;
             touchendX = e.changedTouches[0].screenX;
             handleSwipe();
         });
@@ -1087,6 +1094,7 @@
             activePage.querySelectorAll('.reveal').forEach(el => el.classList.remove('active'));
 
             if (tabId === 'audience') renderAudienceCharts();
+            if (tabId === 'traffic') renderTrafficCharts();
             if (tabId === 'finance') updateFinanceData(); 
             if (tabId === 'gallery') renderGallery(); 
             
@@ -1114,14 +1122,13 @@
             }
         };
 
-        // ВЫРАВНИВАНИЕ ЛЕГЕНД ДЛЯ МОБИЛОК (Универсальная настройка)
         const getLegendConfig = (forceBottom = false) => ({
             position: (window.innerWidth < 768 || forceBottom) ? 'bottom' : 'right',
-            align: window.innerWidth < 768 ? 'start' : 'center', // Левый край на мобилке
+            align: window.innerWidth < 768 ? 'start' : 'center', 
             labels: {
                 color: '#e5e7eb',
                 font: { size: window.innerWidth < 768 ? 10 : 11 },
-                boxWidth: window.innerWidth < 768 ? 12 : 30, // Мелкие квадратики на мобилке
+                boxWidth: window.innerWidth < 768 ? 12 : 30, 
                 padding: window.innerWidth < 768 ? 12 : 10
             }
         });
@@ -1164,7 +1171,7 @@
                 type: 'doughnut',
                 data: {
                     labels: [t().l_mobile, t().l_pc, t().l_console],
-                    datasets: [{ data: [60, 25, 15], backgroundColor: ['#1a1a1a', '#00E639', '#6b7280'], borderColor: 'transparent', borderWidth: 2, hoverOffset: 4 }]
+                    datasets: [{ data: [72, 28, 0], backgroundColor: ['#1a1a1a', '#00E639', '#6b7280'], borderColor: 'transparent', borderWidth: 2, hoverOffset: 4 }]
                 },
                 options: { plugins: { legend: getLegendConfig(), tooltip: percentageTooltip }, cutout: '65%' }
             });
@@ -1182,11 +1189,11 @@
                 type: 'bar',
                 data: {
                     labels: [t().m_soc, t().m_comp, t().m_stress, t().m_ach, t().m_inc],
-                    datasets: [{ data: [35, 25, 20, 15, 5], backgroundColor: ['#00E639', '#6b7280', '#9ca3af', '#4ade80', '#d1d5db'], borderRadius: 4 }]
+                    datasets: [{ data: [35, 41, 20, 15, 5], backgroundColor: ['#00E639', '#6b7280', '#9ca3af', '#4ade80', '#d1d5db'], borderRadius: 4 }]
                 },
                 options: {
                     indexAxis: 'y', plugins: { legend: { display: false }, tooltip: percentageTooltip },
-                    scales: { x: { grid: { color: '#1a1a1a' }, max: 40, ticks: { font: {size: 10} } }, y: { grid: { display: false }, ticks: { font: {size: 10} } } }
+                    scales: { x: { grid: { color: '#1a1a1a' }, max: 50, ticks: { font: {size: 10} } }, y: { grid: { display: false }, ticks: { font: {size: 10} } } }
                 }
             });
 
@@ -1220,6 +1227,103 @@
                 options: {
                     plugins: { legend: getBarLegendConfig(), tooltip: percentageTooltip },
                     scales: { y: { grid: { color: '#1a1a1a' }, beginAtZero: true, ticks: { font: {size: 10} } }, x: { grid: { display: false }, ticks: { font: {size: 10} } } }
+                }
+            });
+        }
+
+        // --- ГРАФИКИ: ТРАФИК И ДАННЫЕ ---
+        function renderTrafficCharts() {
+            createChart('audienceFunnelChart', {
+                type: 'bar',
+                data: {
+                    labels: [t().tf_pop, t().tf_int, t().tf_core, t().tf_target],
+                    datasets: [{
+                        label: 'Кол-во',
+                        data: [270000, 100000, 35000, 15000],
+                        backgroundColor: ['#1a1a1a', '#4b5563', '#9ca3af', '#00E639'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: '#1a1a1a' }, ticks: { font: {size: 10}, callback: function(v) { return v >= 1000 ? (v/1000)+'k' : v; } } },
+                        y: { grid: { display: false }, ticks: { font: {size: window.innerWidth < 768 ? 9 : 11} } }
+                    }
+                }
+            });
+
+            createChart('playtimeChart', {
+                type: 'doughnut',
+                data: {
+                    labels: [t().th_1, t().th_2, t().th_3, t().th_4],
+                    datasets: [{ data: [24, 40, 25, 11], backgroundColor: ['#1a1a1a', '#4b5563', '#9ca3af', '#00E639'], borderColor: 'transparent', borderWidth: 2 }]
+                },
+                options: { plugins: { legend: getLegendConfig(), tooltip: percentageTooltip }, cutout: '65%' }
+            });
+
+            createChart('conversionChart', {
+                type: 'bar',
+                data: {
+                    labels: [t().tc_pc, t().tc_mob],
+                    datasets: [
+                        { label: t().tc_rent, data: [100, 10], backgroundColor: '#1a1a1a', borderColor: '#00E639', borderWidth: 1, borderRadius: 2 },
+                        { label: t().tc_fb, data: [40, 75], backgroundColor: '#00E639', borderRadius: 2 }
+                    ]
+                },
+                options: {
+                    plugins: { legend: getBarLegendConfig(), tooltip: percentageTooltip },
+                    scales: { y: { grid: { color: '#1a1a1a' }, beginAtZero: true, max: 100, ticks: { font: {size: 10} } }, x: { grid: { display: false }, ticks: { font: {size: 10} } } }
+                }
+            });
+
+            createChart('occupancyModelChart', {
+                type: 'line',
+                data: {
+                    labels: ['10:00', '14:00', '18:00', '22:00', '02:00', '06:00'],
+                    datasets: [
+                        { label: t().to_wd, data: [10, 25, 80, 60, 30, 5], borderColor: '#6b7280', backgroundColor: 'rgba(107,114,128,0.1)', borderWidth: 2, fill: true, pointRadius: 4 },
+                        { label: t().to_we, data: [30, 60, 95, 90, 70, 20], borderColor: '#00E639', backgroundColor: 'rgba(0,230,57,0.1)', borderWidth: 3, fill: true, pointRadius: 4 }
+                    ]
+                },
+                options: {
+                    plugins: { legend: getBarLegendConfig(), tooltip: percentageTooltip },
+                    scales: { y: { grid: { color: '#1a1a1a' }, beginAtZero: true, max: 100, ticks: { font: {size: 10} } }, x: { grid: { color: '#1a1a1a' }, ticks: { font: {size: 10} } } }
+                }
+            });
+
+            // Сезонность - Фикс: Добавлен процент во всплывающие подсказки
+            createChart('seasonalityChart', {
+                type: 'line',
+                data: {
+                    labels: t().months,
+                    datasets: [
+                        { label: t().season_loc, data: [45, 45, 60, 80, 85, 60, 50, 45, 45, 75, 55, 45], borderColor: '#00E639', backgroundColor: 'transparent', borderWidth: 3, pointRadius: 4, tension: 0.3 },
+                        { label: t().season_exp, data: [90, 85, 60, 40, 30, 30, 50, 60, 40, 50, 70, 95], borderColor: '#6b7280', backgroundColor: 'transparent', borderWidth: 2, borderDash: [5, 5], pointRadius: 4, tension: 0.3 }
+                    ]
+                },
+                options: {
+                    plugins: { 
+                        legend: getBarLegendConfig(),
+                        tooltip: percentageTooltip
+                    },
+                    scales: { y: { grid: { color: '#1a1a1a' }, beginAtZero: true, max: 100, ticks: { font: {size: 10} } }, x: { grid: { color: '#1a1a1a' }, ticks: { font: {size: 10} } } }
+                }
+            });
+
+            createChart('esportsPotentialChart', {
+                type: 'bar',
+                data: {
+                    labels: ['12-15', '15-18', '18-24'],
+                    datasets: [
+                        { label: t().ts_c, data: [60, 45, 70], backgroundColor: '#1a1a1a', borderColor: '#4b5563', borderWidth: 1 },
+                        { label: t().ts_p, data: [40, 55, 30], backgroundColor: '#00E639' }
+                    ]
+                },
+                options: {
+                    plugins: { legend: getBarLegendConfig(), tooltip: percentageTooltip },
+                    scales: { y: { grid: { color: '#1a1a1a' }, stacked: true, max: 100, ticks: { font: {size: 10} } }, x: { grid: { display: false }, stacked: true, ticks: { font: {size: 10} } } }
                 }
             });
         }
@@ -1258,6 +1362,7 @@
         function renderFinanceCharts(data) {
             const sym = currentCurrency === 'THB' ? 'THB' : 'USD';
             document.getElementById('forecast-chart-title').innerText = `${t().fc_title} (${sym})`;
+            document.getElementById('seat-rev-title').innerText = `${t().ch_seat} (${sym})`;
 
             const baseForecastTHB = {
                 pc: [1650000, 1900000, 2200000, 2600000, 3100000],
@@ -1312,6 +1417,33 @@
                 options: { plugins: { legend: getLegendConfig(true), tooltip: { callbacks: { label: c => c.label + ': ' + formatCurrency(currentCurrency === 'THB' ? c.raw : c.raw * exchangeRate, true) } } } }
             });
 
+            // Новый график: Выручка с места
+            const seatPcRent = currentCurrency === 'THB' ? 400 : 400/exchangeRate;
+            const seatPcFB = currentCurrency === 'THB' ? 150 : 150/exchangeRate;
+            const seatMobRent = currentCurrency === 'THB' ? 100 : 100/exchangeRate;
+            const seatMobFB = currentCurrency === 'THB' ? 350 : 350/exchangeRate;
+
+            createChart('seatRevChart', {
+                type: 'bar',
+                data: {
+                    labels: [t().seat_pc, t().seat_mob],
+                    datasets: [
+                        { label: t().rev_rent, data: [seatPcRent, seatMobRent], backgroundColor: '#00E639', borderRadius: 2 },
+                        { label: t().rev_fb, data: [seatPcFB, seatMobFB], backgroundColor: '#6b7280', borderRadius: 2 }
+                    ]
+                },
+                options: {
+                    plugins: { 
+                        legend: getBarLegendConfig(),
+                        tooltip: { callbacks: { label: c => c.dataset.label + ': ' + formatCurrency(currentCurrency === 'THB' ? c.raw : c.raw * exchangeRate, true) } } 
+                    },
+                    scales: {
+                        y: { grid: { color: '#1a1a1a' }, stacked: true, ticks: { font: {size: 10} } },
+                        x: { grid: { display: false }, stacked: true, ticks: { font: {size: 10} } }
+                    }
+                }
+            });
+
             document.getElementById('cashflow-chart-title').innerText = `${t().cf_title} (${sym})`;
 
             let cumulativeTHB = -data.capex;
@@ -1325,7 +1457,7 @@
                 data: {
                     labels: Array.from({length: 24}, (_, i) => i + 1).map(m => `${m}`),
                     datasets: [{
-                        label: `CashFlow (${sym})`, data: cashflowData, borderColor: '#00E639',
+                        label: `CashFlow`, data: cashflowData, borderColor: '#00E639',
                         backgroundColor: c => (c.raw || 0) < 0 ? 'rgba(107, 114, 128, 0.2)' : 'rgba(0, 230, 57, 0.2)', 
                         segment: { borderColor: ctx => ctx.p1.parsed.y < 0 ? '#6b7280' : '#00E639' },
                         borderWidth: 3, fill: true, pointRadius: 0
@@ -1354,11 +1486,11 @@
 
         window.addEventListener('resize', () => {
             if (currentActiveTab === 'audience') renderAudienceCharts();
+            if (currentActiveTab === 'traffic') renderTrafficCharts();
             if (currentActiveTab === 'finance') updateFinanceData();
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            // ИНИЦИАЛИЗАЦИЯ: Стартуем сразу с Английского для Welcome Screen
             setLang('en'); 
             initScrollAnimations(); 
         });
