@@ -273,19 +273,19 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_age">Возрастные сегменты</h3>
+                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_age">Возрастные сегменты</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="ageDemographicsChart"></canvas>
                     </div>
                 </div>
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_base">Расклад базы (Самуи)</h3>
+                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_base">Расклад базы (Самуи)</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="playerBaseChart"></canvas>
                     </div>
                 </div>
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-xl text-white mb-4 break-words" data-i18n="ch_local">Возраст: Местные vs Экспаты</h3>
+                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_local">Возраст: Местные vs Экспаты</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="localVsExpatChart"></canvas>
                     </div>
@@ -565,11 +565,32 @@
         Chart.defaults.color = '#9ca3af'; 
         Chart.defaults.maintainAspectRatio = false;
 
+        // ОБНОВЛЕННАЯ СТРУКТУРА ДАННЫХ ДЛЯ ГАЛЕРЕИ
         const galleryData = [
-            { id: 0, url: 'https://i.ibb.co/m5jcj2GP/reception.png', key: 'gal_1' }, // 1. Ресепшн
-            { id: 1, url: 'https://i.ibb.co/ZzPm1YsV/standard.png', key: 'gal_2' }, // 2. Стандартная зона
-            { id: 2, url: 'https://i.ibb.co/ksBjtQxj/vip.png', key: 'gal_3' }, // 3. VIP Зона
-            { id: 3, url: 'https://i.ibb.co/fV9pSZQ2/mobile.png', key: 'gal_4' }  // 4. Моб. Гейминг  
+            { 
+                id: 0, 
+                thumbUrl: 'https://i.ibb.co/Jj1s1GKS/reception.png', 
+                fullUrl: 'https://i.ibb.co/m5jcj2GP/reception.png', 
+                key: 'gal_1' 
+            }, 
+            { 
+                id: 1, 
+                thumbUrl: 'https://i.ibb.co/60xBJ1hm/standard.png', 
+                fullUrl: 'https://i.ibb.co/ZzPm1YsV/standard.png', 
+                key: 'gal_2' 
+            }, 
+            { 
+                id: 2, 
+                thumbUrl: 'https://i.ibb.co/PvjKdwNK/vip.png', 
+                fullUrl: 'https://i.ibb.co/ksBjtQxj/vip.png', 
+                key: 'gal_3' 
+            }, 
+            { 
+                id: 3, 
+                thumbUrl: 'https://i.ibb.co/20St6R5y/mobile.png', 
+                fullUrl: 'https://i.ibb.co/fV9pSZQ2/mobile.png', 
+                key: 'gal_4' 
+            }  
         ];
 
         const i18n = {
@@ -955,10 +976,11 @@
 
         function renderGallery() {
             const container = document.getElementById('gallery-grid');
+            // Используем img.thumbUrl для миниатюр
             container.innerHTML = galleryData.map((img, index) => `
                 <div onclick="openLightbox(${index})" class="panel p-2 cursor-pointer group reveal" style="transition-delay: ${index * 0.1}s">
                     <div class="relative overflow-hidden rounded border border-cyberdark group-hover:border-cybergreen transition-colors aspect-video">
-                        <img src="${img.url}" alt="Render" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="${img.thumbUrl}" alt="Render" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-transparent to-transparent opacity-80 pointer-events-none"></div>
                         <div class="absolute bottom-0 left-0 p-4 pointer-events-none">
                             <h3 class="font-cyber text-white text-lg md:text-xl group-hover:text-cybergreen transition-colors drop-shadow-md tracking-wider uppercase">${t()[img.key]}</h3>
@@ -995,7 +1017,8 @@
 
         function updateLightboxContent() {
             const imgData = galleryData[currentImageIndex];
-            lightboxImg.src = imgData.url;
+            // Используем imgData.fullUrl для полноэкранного просмотра
+            lightboxImg.src = imgData.fullUrl;
             lightboxTitle.innerText = t()[imgData.key];
         }
 
@@ -1293,7 +1316,6 @@
                 }
             });
 
-            // Сезонность - Фикс: Добавлен процент во всплывающие подсказки
             createChart('seasonalityChart', {
                 type: 'line',
                 data: {
