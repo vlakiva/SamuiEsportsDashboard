@@ -113,6 +113,9 @@
             transform: translate(-50%, -50%); box-shadow: 0 0 8px rgba(0, 230, 57, 0.3);
         }
         @media (pointer: coarse) { .cursor-dot, .cursor-tail { display: none !important; } }
+
+        /* Блок взаимодействий с графиками во время скролла/свайпа */
+        .disable-chart-interactions canvas { pointer-events: none !important; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
@@ -176,27 +179,33 @@
         </div>
 
         <!-- APP-LIKE НАВИГАЦИЯ -->
-        <nav class="fixed bottom-0 left-0 w-full z-[100] bg-panelbg/95 backdrop-blur-md border-t border-cyberdark flex justify-between px-2 pt-2 pb-4 md:relative md:border-t-0 md:bg-transparent md:flex-col md:p-0 md:justify-start md:mt-4 md:gap-3">
-            <button onclick="switchTab('audience')" id="tab-audience" class="tab-btn active flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-users text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_aud">Аудитория</span>
-            </button>
-            <button onclick="switchTab('traffic')" id="tab-traffic" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-chart-polar text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_traf">Трафик</span>
-            </button>
-            <button onclick="switchTab('esports')" id="tab-esports" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-strategy text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_strat">Стратегия</span>
-            </button>
-            <button onclick="switchTab('finance')" id="tab-finance" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-coins text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_fin">Экономика</span>
-            </button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center">
-                <i class="ph ph-aperture text-2xl md:text-xl shrink-0"></i> 
-                <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_gal">Галерея</span>
-            </button>
+        <nav id="mobile-nav-bar" class="fixed bottom-0 left-0 w-full z-[100] bg-panelbg/95 backdrop-blur-md border-t border-cyberdark transition-all duration-500 ease-in-out md:relative md:border-t-0 md:bg-transparent md:mt-4 md:translate-y-0 md:opacity-100 md:pointer-events-auto">
+            <div id="nav-container" class="flex md:flex-col overflow-x-auto mobile-nav-scroll gap-2 px-2 py-3 md:p-0 md:justify-start">
+                <button onclick="switchTab('audience')" id="tab-audience" class="tab-btn active shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-users text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_aud">Аудитория</span>
+                </button>
+                <button onclick="switchTab('traffic')" id="tab-traffic" class="tab-btn shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-chart-polar text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_traf">Трафик</span>
+                </button>
+                <button onclick="switchTab('esports')" id="tab-esports" class="tab-btn shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-strategy text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_strat">Стратегия</span>
+                </button>
+                <button onclick="switchTab('tournaments')" id="tab-tournaments" class="tab-btn shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-trophy text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_tour">Турниры</span>
+                </button>
+                <button onclick="switchTab('finance')" id="tab-finance" class="tab-btn shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-coins text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_fin">Экономика</span>
+                </button>
+                <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn shrink-0 flex-1 md:flex-none flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 p-2 px-3 md:px-4 md:py-3 rounded md:border border-transparent md:border-cyberdark transition-all md:text-left text-center min-w-[72px]">
+                    <i class="ph ph-aperture text-2xl md:text-xl shrink-0"></i> 
+                    <span class="text-[9px] md:text-base tracking-widest uppercase md:normal-case font-cyber mt-1 md:mt-0" data-i18n="nav_gal">Галерея</span>
+                </button>
+            </div>
         </nav>
 
         <div class="mt-auto hidden md:block">
@@ -273,19 +282,19 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_age">Возрастные сегменты</h3>
+                    <h3 class="font-cyber text-sm sm:text-base lg:text-sm xl:text-base leading-tight text-white mb-4 break-words" data-i18n="ch_age">Возрастные сегменты</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="ageDemographicsChart"></canvas>
                     </div>
                 </div>
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_base">Расклад базы (Самуи)</h3>
+                    <h3 class="font-cyber text-sm sm:text-base lg:text-sm xl:text-base leading-tight text-white mb-4 break-words" data-i18n="ch_base">Расклад базы (Самуи)</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="playerBaseChart"></canvas>
                     </div>
                 </div>
                 <div class="panel min-w-0 reveal">
-                    <h3 class="font-cyber text-base sm:text-lg leading-tight text-white mb-4 break-words" data-i18n="ch_local">Возраст: Местные vs Экспаты</h3>
+                    <h3 class="font-cyber text-sm sm:text-base lg:text-sm xl:text-base leading-tight text-white mb-4 break-words" data-i18n="ch_local">Возраст: Местные vs Экспаты</h3>
                     <div class="relative h-56 sm:h-64 w-full">
                         <canvas id="localVsExpatChart"></canvas>
                     </div>
@@ -337,7 +346,7 @@
                 <div class="relative h-56 sm:h-72 w-full">
                     <canvas id="occupancyModelChart"></canvas>
                 </div>
-                <p class="text-gray-500 text-xs sm:text-sm mt-4 text-center" data-i18n="ch_occ_sub">*Расчет средней целевой загрузки клуба в 40% (показатель для финансовой модели).</p>
+                <p class="text-gray-500 text-xs sm:text-sm mt-4 text-center" data-i18n="ch_occ_sub">*Расчет средней целевой загрузки клуба в 20-30% (показатель для финансовой модели).</p>
             </div>
             
             <div class="panel w-full min-w-0 reveal" style="transition-delay: 0.1s">
@@ -519,9 +528,9 @@
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-300">
                     <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p1">Цена за час:</span> <br><b class="text-white text-base sm:text-lg" id="val-price">60 THB</b></div>
-                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p2">Сред. загрузка:</span> <br><b class="text-white text-base sm:text-lg">40%</b></div>
-                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p3">Часов в день:</span> <br><b class="text-white text-base sm:text-lg" data-i18n="ass_v3">16 ч.</b></div>
-                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p4">Чек бара:</span> <br><b class="text-white text-base sm:text-lg" id="val-check">100 THB</b></div>
+                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p2">Сред. загрузка:</span> <br><b class="text-white text-base sm:text-lg">20-30%</b></div>
+                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p3">Часов в день:</span> <br><b class="text-white text-base sm:text-lg" data-i18n="ass_v3">24 ч.</b></div>
+                    <div class="break-words"><span class="text-gray-500 text-xs sm:text-sm" data-i18n="ass_p4">Чек бара:</span> <br><b class="text-white text-base sm:text-lg" id="val-check">120 THB</b></div>
                 </div>
             </div>
         </div>
@@ -565,7 +574,6 @@
         Chart.defaults.color = '#9ca3af'; 
         Chart.defaults.maintainAspectRatio = false;
 
-        // ОБНОВЛЕННАЯ СТРУКТУРА ДАННЫХ ДЛЯ ГАЛЕРЕИ
         const galleryData = [
             { 
                 id: 0, 
@@ -595,7 +603,7 @@
 
         const i18n = {
             ru: {
-                ver_text: "Инвест-Дэшборд v5.2",
+                ver_text: "Инвест-Дэшборд v5.3",
                 nav_aud: "Аудитория", nav_traf: "Трафик", nav_strat: "Стратегия", nav_tour: "Турниры", nav_fin: "Экономика", nav_gal: "Галерея",
                 stat_proj: "Статус проекта", stat_seed: "SEED РАУНД",
                 
@@ -608,7 +616,7 @@
                 ch_age: "Возрастные сегменты", ch_base: "Расклад базы (Самуи)", ch_local: "Возраст: Местные vs Экспаты",
                 
                 pt_h2: "<span class='text-cybergreen'>Трафик</span> и Загрузка", pt_sub: "Аналитика целевой аудитории, конверсий и паттернов посещаемости на Самуи.",
-                ch_funnel: "Воронка аудитории (Самуи)", ch_time: "Игровое время (Часов/день)", ch_occ: "Модель суточной загрузки SCA (%)", ch_occ_sub: "*Расчет средней целевой загрузки клуба в 40% (показатель для финансовой модели).",
+                ch_funnel: "Воронка аудитории (Самуи)", ch_time: "Игровое время (Часов/день)", ch_occ: "Модель суточной загрузки SCA (%)", ch_occ_sub: "*Расчет средней целевой загрузки клуба в 20-30% (показатель для финансовой модели).",
                 t_pc_h: "PC-Арена (Киберспорт)", t_pc_p: "Целевая аудитория: Хардкорные геймеры и дети экспатов. Монетизация идет за счет высокой стоимости аренды мощных ПК. Конверсия в бар средняя, так как фокус на игре.",
                 t_mob_h: "Mobile Lounge (Социализация)", t_mob_p: "Мобильный гейминг в Таиланде — это социальный феномен. Игроки приходят компаниями в лаунж. Заработок идет с феноменальной конверсии в еду, напитки (F&B) и зарядку.",
                 
@@ -627,7 +635,7 @@
                 
                 p4_h2: "<span class='text-cybergreen'>Юнит-Экономика</span> SCA", p4_sub: "Финансовые модели и расчет окупаемости арены. Выберите сценарий.",
                 scen_mini: "Мини (12 ПК)", scen_base: "База (20 ПК)", scen_pro: "Про (40 ПК)", fin_inv: "Инвестиции", fin_rev: "Выручка (мес)", fin_exp: "Расходы (мес)", fin_prof: "Чистая прибыль", fin_roi: "Окупаемость", ch_pie: "Выручка vs Расходы",
-                ass_h: "Ключевые допущения", ass_p1: "Цена за час:", ass_p2: "Сред. загрузка:", ass_p3: "Часов в день:", ass_p4: "Чек бара:", ass_v3: "16 ч.",
+                ass_h: "Ключевые допущения", ass_p1: "Цена за час:", ass_p2: "Сред. загрузка:", ass_p3: "Часов в день:", ass_p4: "Чек бара:", ass_v3: "24 ч.",
                 
                 p5_h2: "<span class='text-cybergreen'>Визуализация</span> Арены", p5_sub: "Концепт-рендеры ключевых зон клуба.",
                 gal_1: "Ресепшн", gal_2: "Стандартная зона", gal_3: "VIP Зона", gal_4: "Зона мобильного гейминга",
@@ -668,7 +676,7 @@
                 ch_age: "Age Demographics", ch_base: "Audience Breakdown (Samui)", ch_local: "Age: Locals vs Expats",
                 
                 pt_h2: "Traffic & <span class='text-cybergreen'>Occupancy</span>", pt_sub: "Analysis of target audience, conversions, and attendance patterns on Samui.",
-                ch_funnel: "Audience Funnel (Samui)", ch_time: "Playtime (Hours/Day)", ch_occ: "SCA Daily Occupancy Model (%)", ch_occ_sub: "*Calculation of the average target club occupancy of 40% (indicator for the financial model).",
+                ch_funnel: "Audience Funnel (Samui)", ch_time: "Playtime (Hours/Day)", ch_occ: "SCA Daily Occupancy Model (%)", ch_occ_sub: "*Calculation of the average target club occupancy of 20-30% (indicator for the financial model).",
                 t_pc_h: "PC-Arena (Esports)", t_pc_p: "Target audience: Hardcore gamers and expat kids. Monetization comes from the high rental cost of powerful PCs. Bar conversion is medium, as the focus is on the game.",
                 t_mob_h: "Mobile Lounge (Social)", t_mob_p: "Mobile gaming in Thailand is a social phenomenon. Players come in groups to the lounge. Earnings come from phenomenal conversion into food, drinks (F&B), and charging.",
                 
@@ -687,7 +695,7 @@
                 
                 p4_h2: "SCA <span class='text-cybergreen'>Unit Economics</span>", p4_sub: "Financial models and arena payback calculation. Choose a scenario.",
                 scen_mini: "Mini (12 PC)", scen_base: "Base (20 PC)", scen_pro: "Pro (40 PC)", fin_inv: "Investments", fin_rev: "Revenue (mo)", fin_exp: "Expenses (mo)", fin_prof: "Net Profit", fin_roi: "ROI (Months)", ch_pie: "Revenue vs Expenses",
-                ass_h: "Key Assumptions", ass_p1: "Price per hour:", ass_p2: "Avg. Occupancy:", ass_p3: "Hours per day:", ass_p4: "Bar Check:", ass_v3: "16 h.",
+                ass_h: "Key Assumptions", ass_p1: "Price per hour:", ass_p2: "Avg. Occupancy:", ass_p3: "Hours per day:", ass_p4: "Bar Check:", ass_v3: "24 h.",
                 
                 p5_h2: "Arena <span class='text-cybergreen'>Visualization</span>", p5_sub: "Concept renders of the club's key zones.",
                 gal_1: "Reception", gal_2: "Standard Zone", gal_3: "VIP Zone", gal_4: "Mobile Gaming Zone",
@@ -728,7 +736,7 @@
                 ch_age: "กลุ่มอายุ", ch_base: "สัดส่วนผู้ชม (สมุย)", ch_local: "อายุ: คนท้องถิ่น vs ชาวต่างชาติ",
                 
                 pt_h2: "<span class='text-cybergreen'>ทราфฟิก</span> และการเข้าใช้", pt_sub: "การวิเคราะห์กลุ่มเป้าหมาย คอนเวอร์ชั่น และรูปแบบการเข้าใช้บริการบนเกาะสมุย",
-                ch_funnel: "ช่องทางผู้ชม (สมุย)", ch_time: "เวลาเล่นเกม (ชั่วโมง/วัน)", ch_occ: "โมเดลการเข้าใช้ SCA รายวัน (%)", ch_occ_sub: "*การคำนวณการเข้าใช้คลับเป้าหมายเฉลี่ย 40% (ตัวชี้วัดสำหรับแบบจำลองทางการเงิน)",
+                ch_funnel: "ช่องทางผู้ชม (สมุย)", ch_time: "เวลาเล่นเกม (ชั่วโมง/วัน)", ch_occ: "โมเดลการเข้าใช้ SCA รายวัน (%)", ch_occ_sub: "*การคำนวณการเข้าใช้คลับเป้าหมายเฉลี่ย 20-30% (ตัวชี้วัดสำหรับแบบจำลองทางการเงิน)",
                 t_pc_h: "พีซี-อารีน่า (อีสปอร์ต)", t_pc_p: "กลุ่มเป้าหมาย: เกมเมอร์ฮาร์ดคอร์และเด็กต่างชาติ การสร้างรายได้มาจากค่าเช่าพีซี การแปลงเป็นบาร์อยู่ในระดับปานกลาง",
                 t_mob_h: "โมบายเลานจ์ (สังคม)", t_mob_p: "การเล่นเกมมือถือ เป็นปรากฏการณ์ทางสังคม รายได้มาจากการแปลงเป็นอาหาร เครื่องดื่ม (F&B) ที่สูงมาก",
                 
@@ -747,7 +755,7 @@
                 
                 p4_h2: "<span class='text-cybergreen'>เศรษฐศาสตร์หน่วย</span> SCA", p4_sub: "โมเดลทางการเงินและการคำนวณการคืนทุนของอารีน่า เลือกสถานการณ์",
                 scen_mini: "มินิ (12 พีซี)", scen_base: "พื้นฐาน (20 พีซี)", scen_pro: "โปร (40 พีซี)", fin_inv: "การลงทุน", fin_rev: "รายได้ (เดือน)", fin_exp: "ค่าใช้จ่าย (เดือน)", fin_prof: "กำไรสุทธิ", fin_roi: "ระยะเวลาคืนทุน", ch_pie: "รายได้ vs ค่าใช้จ่าย",
-                ass_h: "สมมติฐานหลัก", ass_p1: "ราคาต่อชั่วโมง:", ass_p2: "อัตราการเข้าใช้:", ass_p3: "ชั่วโมงต่อวัน:", ass_p4: "บิลเฉลี่ยบาร์:", ass_v3: "16 ช.ม.",
+                ass_h: "สมมติฐานหลัก", ass_p1: "ราคาต่อชั่วโมง:", ass_p2: "อัตราการเข้าใช้:", ass_p3: "ชั่วโมงต่อวัน:", ass_p4: "บิลเฉลี่ยบาร์:", ass_v3: "24 ช.ม.",
                 
                 p5_h2: "<span class='text-cybergreen'>ภาพจำลอง</span> อารีน่า", p5_sub: "ภาพเรนเดอร์แนวคิดของโซนหลักในคลับ",
                 gal_1: "แผนกต้อนรับ", gal_2: "โซนมาตรฐาน", gal_3: "โซนวีไอพี", gal_4: "โซนเกมมือถือ",
@@ -920,7 +928,7 @@
             document.getElementById('kpi-arpu-val').innerText = currentCurrency === 'THB' ? new Intl.NumberFormat('ru-RU').format(arpuThb) + ' THB' : '$' + arpuUsd;
 
             const price = currentCurrency === 'THB' ? '60 THB' : (60/exchangeRate).toFixed(2) + ' $';
-            const check = currentCurrency === 'THB' ? '100 THB' : (100/exchangeRate).toFixed(2) + ' $';
+            const check = currentCurrency === 'THB' ? '120 THB' : (120/exchangeRate).toFixed(2) + ' $';
             document.getElementById('val-price').innerHTML = price;
             document.getElementById('val-check').innerHTML = check;
         }
@@ -976,7 +984,6 @@
 
         function renderGallery() {
             const container = document.getElementById('gallery-grid');
-            // Используем img.thumbUrl для миниатюр
             container.innerHTML = galleryData.map((img, index) => `
                 <div onclick="openLightbox(${index})" class="panel p-2 cursor-pointer group reveal" style="transition-delay: ${index * 0.1}s">
                     <div class="relative overflow-hidden rounded border border-cyberdark group-hover:border-cybergreen transition-colors aspect-video">
@@ -1017,7 +1024,6 @@
 
         function updateLightboxContent() {
             const imgData = galleryData[currentImageIndex];
-            // Используем imgData.fullUrl для полноэкранного просмотра
             lightboxImg.src = imgData.fullUrl;
             lightboxTitle.innerText = t()[imgData.key];
         }
@@ -1032,30 +1038,53 @@
         // --- ЛОГИКА СВАЙПА ДЛЯ МОБИЛОК ---
         let touchstartX = 0;
         let touchendX = 0;
+        let touchstartY = 0;
+        let touchendY = 0;
         const appTabs = ['audience', 'traffic', 'esports', 'tournaments', 'finance', 'gallery'];
 
         document.addEventListener('touchstart', e => {
-            if(e.target.closest('canvas') || e.target.closest('#lightbox') || !welcomeDismissed) return;
+            // Игнорируем только лайтбокс и саму панель навигации, разрешаем свайпть прям по графикам!
+            if(e.target.closest('#lightbox') || e.target.closest('#mobile-nav-bar') || !welcomeDismissed) return;
             touchstartX = e.changedTouches[0].screenX;
-        });
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: true});
 
         document.addEventListener('touchend', e => {
-            if(e.target.closest('canvas') || e.target.closest('#lightbox') || !welcomeDismissed) return;
+            if(e.target.closest('#lightbox') || e.target.closest('#mobile-nav-bar') || !welcomeDismissed) return;
             touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
             handleSwipe();
-        });
+        }, {passive: true});
 
         function handleSwipe() {
-            const swipeThreshold = 70; 
-            if (touchendX < touchstartX - swipeThreshold) {
+            const diffX = touchstartX - touchendX;
+            const diffY = touchstartY - touchendY;
+
+            // Порог свайпа снижен (с 70 до 40), но проверяем, чтобы свайп был явно горизонтальным
+            if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
                 let idx = appTabs.indexOf(currentActiveTab);
-                if (idx < appTabs.length - 1) switchTab(appTabs[idx + 1]);
-            }
-            if (touchendX > touchstartX + swipeThreshold) {
-                let idx = appTabs.indexOf(currentActiveTab);
-                if (idx > 0) switchTab(appTabs[idx - 1]);
+                if (diffX > 0 && idx < appTabs.length - 1) {
+                    switchTab(appTabs[idx + 1]);
+                    showNavTemporarily();
+                } else if (diffX < 0 && idx > 0) {
+                    switchTab(appTabs[idx - 1]);
+                    showNavTemporarily();
+                }
             }
         }
+
+
+        // --- ОТКЛЮЧЕНИЕ ГРАФИКОВ ПРИ СКРОЛЛЕ (АНТИ-ЗАЦЕП) ---
+        let interactionTimeout;
+        const lockInteractions = () => {
+            document.body.classList.add('disable-chart-interactions');
+            clearTimeout(interactionTimeout);
+            interactionTimeout = setTimeout(() => {
+                document.body.classList.remove('disable-chart-interactions');
+            }, 250);
+        };
+        window.addEventListener('scroll', lockInteractions, {passive: true});
+        document.addEventListener('touchmove', lockInteractions, {passive: true});
 
 
         // --- КАСТОМНЫЙ КУРСОР ---
@@ -1104,7 +1133,46 @@
             new MutationObserver(observeInteractables).observe(document.body, { childList: true, subtree: true });
         }
 
-        // --- ОБЩАЯ ЛОГИКА ВКЛАДОК ---
+
+        // --- ОБЩАЯ ЛОГИКА ВКЛАДОК И СКРЫТИЯ ПАНЕЛИ НА МОБИЛКАХ ---
+        const mobileNav = document.getElementById('mobile-nav-bar');
+        let navHideTimeout;
+
+        function showNavTemporarily() {
+            if (window.innerWidth >= 768) {
+                mobileNav.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+                return;
+            }
+            // Выезжает и становится видимой
+            mobileNav.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+            clearTimeout(navHideTimeout);
+            
+            // Прячется через 1.5с
+            navHideTimeout = setTimeout(() => {
+                mobileNav.classList.add('translate-y-full', 'opacity-0', 'pointer-events-none');
+            }, 1500);
+        }
+
+        // Показываем панель при любом скролле страницы
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth < 768) showNavTemporarily();
+        }, {passive: true});
+
+        // Пока держишь палец на экране (кроме самой панели), таймер скрытия на паузе
+        document.addEventListener('touchstart', (e) => {
+            if (window.innerWidth < 768 && !e.target.closest('#mobile-nav-bar')) {
+                clearTimeout(navHideTimeout);
+            }
+        }, {passive: true});
+
+        // Отпустил палец - панель снова запускает таймер на скрытие
+        document.addEventListener('touchend', (e) => {
+            if (window.innerWidth < 768 && !e.target.closest('#mobile-nav-bar')) {
+                showNavTemporarily();
+            }
+        }, {passive: true});
+
+
         function switchTab(tabId) {
             currentActiveTab = tabId;
             document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
@@ -1112,7 +1180,8 @@
             
             const activePage = document.getElementById(`page-${tabId}`);
             activePage.classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).classList.add('active');
+            const activeTabBtn = document.getElementById(`tab-${tabId}`);
+            activeTabBtn.classList.add('active');
 
             activePage.querySelectorAll('.reveal').forEach(el => el.classList.remove('active'));
 
@@ -1122,9 +1191,15 @@
             if (tabId === 'gallery') renderGallery(); 
             
             setTimeout(initScrollAnimations, 50);
-            
-            if(window.innerWidth < 768) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Центровка вкладки на мобильных
+            const navContainer = document.getElementById('nav-container');
+            if (window.innerWidth < 768 && activeTabBtn && navContainer) {
+                const scrollLeftPos = activeTabBtn.offsetLeft - (navContainer.offsetWidth / 2) + (activeTabBtn.offsetWidth / 2);
+                navContainer.scrollTo({ left: scrollLeftPos, behavior: 'smooth' });
+                
+                // При смене таба всегда показываем панель
+                showNavTemporarily();
             }
         }
 
@@ -1350,11 +1425,11 @@
             });
         }
 
-        // --- ЛОГИКА И ДАННЫЕ ФИНАНСОВОЙ МОДЕЛИ ---
+        // --- ЛОГИКА И ОБНОВЛЕННЫЕ ДАННЫЕ ФИНАНСОВОЙ МОДЕЛИ ---
         const scenariosData = [
-            { id: 0, capex: 1020000, rev: 176640, opex: 131202, profit: 45438, payback: 22.4 },
-            { id: 1, capex: 1530000, rev: 294400, opex: 194559, profit: 99841, payback: 15.3 },
-            { id: 2, capex: 2850000, rev: 588800, opex: 340000, profit: 248800, payback: 11.5 }
+            { id: 0, capex: 1020000, rev: 264360, opex: 146535, profit: 105153, payback: 9.7 },
+            { id: 1, capex: 1530000, rev: 367200, opex: 211647, profit: 132220, payback: 11.6 },
+            { id: 2, capex: 2850000, rev: 587520, opex: 306887, profit: 238538, payback: 11.9 }
         ];
 
         let currentScenarioIndex = 1; 
@@ -1439,11 +1514,10 @@
                 options: { plugins: { legend: getLegendConfig(true), tooltip: { callbacks: { label: c => c.label + ': ' + formatCurrency(currentCurrency === 'THB' ? c.raw : c.raw * exchangeRate, true) } } } }
             });
 
-            // Новый график: Выручка с места
-            const seatPcRent = currentCurrency === 'THB' ? 400 : 400/exchangeRate;
-            const seatPcFB = currentCurrency === 'THB' ? 150 : 150/exchangeRate;
-            const seatMobRent = currentCurrency === 'THB' ? 100 : 100/exchangeRate;
-            const seatMobFB = currentCurrency === 'THB' ? 350 : 350/exchangeRate;
+            const seatPcRent = currentCurrency === 'THB' ? 360 : 360/exchangeRate;
+            const seatPcFB = currentCurrency === 'THB' ? 250 : 250/exchangeRate;
+            const seatMobRent = currentCurrency === 'THB' ? 0 : 0;
+            const seatMobFB = currentCurrency === 'THB' ? 600 : 600/exchangeRate;
 
             createChart('seatRevChart', {
                 type: 'bar',
@@ -1510,11 +1584,18 @@
             if (currentActiveTab === 'audience') renderAudienceCharts();
             if (currentActiveTab === 'traffic') renderTrafficCharts();
             if (currentActiveTab === 'finance') updateFinanceData();
+            
+            if (window.innerWidth >= 768) {
+                mobileNav.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+            }
         });
 
         window.addEventListener('DOMContentLoaded', () => {
             setLang('en'); 
             initScrollAnimations(); 
+            if(window.innerWidth < 768) {
+                setTimeout(showNavTemporarily, 500);
+            }
         });
 
     </script>
